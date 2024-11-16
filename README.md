@@ -24,3 +24,6 @@ PYTHON
 
     python extensions used:
         see requirements.txt
+
+REMEMBER:
+remove all pushing files from directories
