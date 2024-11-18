@@ -49,6 +49,7 @@ class PokemonBulbapediaSpider(scrapy.Spider):
                     yield {
                         'id': id_,
                         'name': tds[2].css('a::text').get().strip(),
+                        'form': None,
                         'type1': tds[3].css('a span::text').get().strip(),
                         'type2': tds[4].css('a span::text').get().strip(),
                     }
@@ -56,6 +57,7 @@ class PokemonBulbapediaSpider(scrapy.Spider):
                     yield {
                         'id': id_,
                         'name': tds[2].css('a::text').get().strip(),
+                        'form': None,
                         'type1': tds[3].css('a span::text').get().strip(),
                         'type2': None,
                     }
@@ -65,6 +67,7 @@ class PokemonBulbapediaSpider(scrapy.Spider):
                     yield {
                         'id': id_,
                         'name': tds[1].css('a::text').get().strip(),
+                        'form': tds[1].css('small::text').get(),
                         'type1': tds[2].css('a span::text').get().strip(),
                         'type2': tds[3].css('a span::text').get().strip(),
                     }
@@ -72,6 +75,7 @@ class PokemonBulbapediaSpider(scrapy.Spider):
                     yield {
                         'id': id_,
                         'name': tds[1].css('a::text').get().strip(),
+                        'form': tds[1].css('small::text').get(),
                         'type1': tds[2].css('a span::text').get().strip(),
                         'type2': None,
                     }
