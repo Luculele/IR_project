@@ -9,7 +9,7 @@ class PokemonDotComSpider(scrapy.Spider):
     ]
 
     def parse(self, response):
-        for pokemon in response.css('div.pokemon-info').getall():
+        for pokemon in response.css('section.section pokedex-results overflow-visible ul.results li.animating div.pokemon-info').getall():
             try:
                 yield {
                     'id' : pokemon.css('p.id').get(),
