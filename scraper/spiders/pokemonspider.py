@@ -33,19 +33,45 @@ class PokemonBulbapediaSpider(scrapy.Spider):
     ]
 
     def parse(self, response):
+        id_ = 0
         for pokemon in response.css('table.roundy tbody tr[style="background:#FFF"]'):
             tds = pokemon.css('td')  
-            if len(tds) == 5:    
-                yield {
-                    'id': tds[0].css('::text').get().strip()  ,
-                    'name': tds[2].css('a::text').get().strip(),
-                    'type1': tds[3].css('a span::text').get(),
-                    'type2': tds[4].css('a span::text').get(),
-                }
-            else:
-                yield {
-                    'id': tds[0].css('::text').get().strip()  ,
-                    'name': tds[2].css('a::text').get().strip(),
-                    'type1': tds[3].css('a span::text').get(),
-                    'type2': None,
-                }
+            try:
+                # new_rowspan = int(tds[0].css('::attr(rowspan)').get())
+                is_id_ = tds[0].css('::text').get()
+
+                if is_id_ is None:
+                    raise ValueError("Id not found")
+                
+                id_ = is_id_.strip()
+
+                if len(tds) == 5:    
+                    yield {
+                        'id': id_,
+                        'name': tds[2].css('a::text').get().strip(),
+                        'type1': tds[3].css('a span::text').get().strip(),
+                        'type2': tds[4].css('a span::text').get().strip(),
+                    }
+                else :
+                    yield {
+                        'id': id_,
+                        'name': tds[2].css('a::text').get().strip(),
+                        'type1': tds[3].css('a span::text').get().strip(),
+                        'type2': None,
+                    }
+            except:
+
+                if len(tds) == 4:    
+                    yield {
+                        'id': id_,
+                        'name': tds[1].css('a::text').get().strip(),
+                        'type1': tds[2].css('a span::text').get().strip(),
+                        'type2': tds[3].css('a span::text').get().strip(),
+                    }
+                else:
+                    yield {
+                        'id': id_,
+                        'name': tds[1].css('a::text').get().strip(),
+                        'type1': tds[2].css('a span::text').get().strip(),
+                        'type2': None,
+                    }
