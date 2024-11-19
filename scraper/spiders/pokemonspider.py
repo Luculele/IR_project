@@ -80,10 +80,6 @@ class PokemonBulbapediaSpider(scrapy.Spider):
                         'type2': None,
                     }
 
-
-import scrapy
-
-
 class PokemonDatabaseSpider(scrapy.Spider):
     name = 'pokemonDatabase_listAllPokemon'
     start_urls = [
@@ -95,10 +91,11 @@ class PokemonDatabaseSpider(scrapy.Spider):
         for pokemon in response.css('table#pokedex.data-table.sticky-header.block-wide tbody tr'):
             # Extract Pokémon stats
             stats = pokemon.css('td.cell-num::text').getall()
-
+            form = pokemon.css('td.cell-name small.text-muted::text').get()
             yield {
                 'id': pokemon.css('td.cell-num.cell-fixed span.infocard-cell-data::text').get(),  # ID
                 'name': pokemon.css('td.cell-name a.ent-name::text').get(),  # Name
+                'form': form,
                 'types': pokemon.css('td.cell-icon a.type-icon::text').getall(),  # Types
                 'total': stats[0],  # Total stats
                 'hp': stats[1],     # HP
