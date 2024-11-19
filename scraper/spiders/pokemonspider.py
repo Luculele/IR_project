@@ -92,16 +92,18 @@ class PokemonDatabaseSpider(scrapy.Spider):
             # Extract Pokémon stats
             stats = pokemon.css('td.cell-num::text').getall()
             form = pokemon.css('td.cell-name small.text-muted::text').get()
+            types = pokemon.css('td.cell-icon a.type-icon::text').getall()
             yield {
-                'id': pokemon.css('td.cell-num.cell-fixed span.infocard-cell-data::text').get(),  # ID
-                'name': pokemon.css('td.cell-name a.ent-name::text').get(),  # Name
-                'form': form,
-                'types': pokemon.css('td.cell-icon a.type-icon::text').getall(),  # Types
-                'total': stats[0],  # Total stats
-                'hp': stats[1],     # HP
-                'attack': stats[2], # Attack
-                'defense': stats[3],# Defense
-                'sp_atk': stats[4], # Special Attack
-                'sp_def': stats[5], # Special Defense
-                'speed': stats[6],  # Speed
-                }
+                'id':       pokemon.css('td.cell-num.cell-fixed span.infocard-cell-data::text').get(),
+                'name':     pokemon.css('td.cell-name a.ent-name::text').get(),
+                'form':     form,
+                'type1':    types[0],
+                'type2':    types[1] if len(types) > 1 else None,
+                'total':    stats[0],
+                'hp':       stats[1],
+                'attack':   stats[2],
+                'defense':  stats[3],
+                'sp_atk':   stats[4],
+                'sp_def':   stats[5],
+                'speed':    stats[6],
+            }
