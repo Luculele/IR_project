@@ -2,27 +2,27 @@ import scrapy
 import scrapy.spiders 
 
 
-class PokemonDotComSpider(scrapy.Spider):
-    name = 'pokemon.com/pokedex'
-    start_urls = [
-        'https://www.pokemon.com/us/pokedex'
-    ]
+# class PokemonDotComSpider(scrapy.Spider):
+#     name = 'pokemon_com_pokedex_card_database'
+#     start_urls = [
+#         'https://www.pokemon.com/us/pokemon-tcg/pokemon-cards'
+#     ]
 
-    def parse(self, response):
-        for pokemon in response.css('section.section pokedex-results overflow-visible ul.results li.animating div.pokemon-info').getall():
-            try:
-                yield {
-                    'id' : pokemon.css('p.id').get(),
-                    'name' : pokemon.css('h5').get(),
-                    'ability1' : pokemon.css('div.abilities').get(),
-                    'ability2' : pokemon.css('div.abilities').getall()[1],
-                }
-            except:
-                yield {
-                    'id' : pokemon.css('p.id').get(),
-                    'name' : pokemon.css('h5').get(),
-                    'ability1' : pokemon.css('div.abilities').get(),
-                }
+#     def parse(self, response):
+#         for pokemon in response.css('section.section pokedex-results overflow-visible ul.results li.animating div.pokemon-info').getall():
+#             try:
+#                 yield {
+#                     'id' : pokemon.css('p.id').get(),
+#                     'name' : pokemon.css('h5').get(),
+#                     'ability1' : pokemon.css('div.abilities').get(),
+#                     'ability2' : pokemon.css('div.abilities').getall()[1],
+#                 }
+#             except:
+#                 yield {
+#                     'id' : pokemon.css('p.id').get(),
+#                     'name' : pokemon.css('h5').get(),
+#                     'ability1' : pokemon.css('div.abilities').get(),
+#                 }
 
 
 
@@ -46,7 +46,7 @@ class PokemonBulbapediaSpider(scrapy.Spider):
                 id_ = is_id_.strip()
 
                 if len(tds) == 5:    
-                    yield {
+                    pokemon_data = {
                         'id': id_,
                         'name': tds[2].css('a::text').get().strip(),
                         'form': None,
@@ -54,13 +54,18 @@ class PokemonBulbapediaSpider(scrapy.Spider):
                         'type2': tds[4].css('a span::text').get().strip(),
                     }
                 else :
-                    yield {
+                    pokemon_data =  {
                         'id': id_,
                         'name': tds[2].css('a::text').get().strip(),
                         'form': None,
                         'type1': tds[3].css('a span::text').get().strip(),
                         'type2': None,
                     }
+                
+                new_page = tds[2].css('a::text').get()
+                if new_page is not None:
+                    yield response.follow(new_page, self.parse_pokemon_page, meta={'pokemon_data' : pokemon_data})
+
             except:
 
                 if len(tds) == 4:    
@@ -79,6 +84,13 @@ class PokemonBulbapediaSpider(scrapy.Spider):
                         'type1': tds[2].css('a span::text').get().strip(),
                         'type2': None,
                     }
+    
+    def parse_pokemon_page (self, response):
+        pokemon_data = response.meta['pokemon_data']
+
+        
+
+
 
 class PokemonDatabaseSpider(scrapy.Spider):
     name = 'pokemonDatabase_listAllPokemon'
