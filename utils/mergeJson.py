@@ -22,8 +22,8 @@ def merge_json_files (file1, file2, output):
 
 if __name__ == "__main__":
 
-    file1_path = '../data/pokemonsDatabaseAll.json'
-    file2_path = '../data/pokemonsBulbapediaAll.json'
-    output_path = '../data/final_data/bigPokemonData.json'
+    file1 = '../data/pokemonsDatabaseAll.json'
+    file2 = '../data/pokemonsBulbapediaAll.json'
+    output = '../data/final_data/bigPokemonData.json'
 
-    merge_json_files(file1_path, file2_path, output_path)
+    merge_json_files(file1, file2, output)
