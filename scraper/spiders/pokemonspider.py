@@ -12,20 +12,20 @@ class PokemonBulbapediaSpider(scrapy.Spider):
     ]
 
     def parse(self, response):
-        id_ = 0
+        number_ = 0
         for pokemon in response.css('table.roundy tbody tr[style="background:#FFF"]'):
             tds = pokemon.css('td')  
             try:
-                is_id_ = tds[0].css('::text').get()
+                is_number_ = tds[0].css('::text').get()
 
-                if is_id_ is None:
-                    raise ValueError("Id not found")
+                if is_number_ is None:
+                    raise ValueError("Number not found")
                 
-                id_ = is_id_.strip()
+                number_ = is_number_.strip()
 
                 if len(tds) == 5:    
                     yield {
-                        'id': id_,
+                        'number': number_,
                         'image' : tds[1].css('a img::attr(src)').get(),
                         'name': tds[2].css('a::text').get().strip(),
                         'form': None,
@@ -34,7 +34,7 @@ class PokemonBulbapediaSpider(scrapy.Spider):
                     }
                 else :
                     yield {
-                        'id': id_,
+                        'number': number_,
                         'image' : tds[1].css('a img::attr(src)').get(),
                         'name': tds[2].css('a::text').get().strip(),
                         'form': None,
@@ -46,7 +46,7 @@ class PokemonBulbapediaSpider(scrapy.Spider):
 
                 if len(tds) == 4:    
                     yield {
-                        'id': id_,
+                        'number': number_,
                         'image' : tds[0].css('a img::attr(src)').get(),
                         'name': tds[1].css('a::text').get().strip(),
                         'form': tds[1].css('small::text').get(),
@@ -55,7 +55,7 @@ class PokemonBulbapediaSpider(scrapy.Spider):
                     }
                 else:
                     yield {
-                        'id': id_,
+                        'number': number_,
                         'image' : tds[0].css('a img::attr(src)').get(),
                         'name': tds[1].css('a::text').get().strip(),
                         'form': tds[1].css('small::text').get(),
@@ -64,21 +64,26 @@ class PokemonBulbapediaSpider(scrapy.Spider):
                     }
     
 
+# Spider for Bulbapedia's Pokémon Database
 class PokemonDatabaseSpider(scrapy.Spider):
     name = 'pokemonDatabase_listAllPokemon'
     start_urls = [
         'https://pokemondb.net/pokedex/all'
     ]
-
+    
     def parse(self, response):
         # Loop through each Pokémon row
+
+        id_ = 1
+
         for pokemon in response.css('table#pokedex.data-table.sticky-header.block-wide tbody tr'):
             # Extract Pokémon stats
             stats = pokemon.css('td.cell-num::text').getall()
             form = pokemon.css('td.cell-name small.text-muted::text').get()
             types = pokemon.css('td.cell-icon a.type-icon::text').getall()
             pokemon_data = {
-                'id':       pokemon.css('td.cell-num.cell-fixed span.infocard-cell-data::text').get(),
+                'id':       id_,
+                'number':       pokemon.css('td.cell-num.cell-fixed span.infocard-cell-data::text').get(),
                 'name':     pokemon.css('td.cell-name a.ent-name::text').get(),
                 'form':     form,
                 'type1':    types[0],
@@ -91,6 +96,8 @@ class PokemonDatabaseSpider(scrapy.Spider):
                 'sp_def':   stats[5],
                 'speed':    stats[6],
             }
+
+            id_ += 1
 
             new_page = pokemon.css('td.cell-name a.ent-name::attr(href)').get()
 
