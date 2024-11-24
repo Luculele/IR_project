@@ -1,3 +1,21 @@
 [
-
+{"name": "Bulbasaur", "sizes": "0.7 m, 6.9 kg", "ability1": "Overgrow", "ability2": "Chlorophyll"},
+{"name": "Charmander", "sizes": "0.6 m, 8.5 kg", "ability1": "Blaze", "ability2": "Solar Power"},
+{"name": "Ivysaur", "sizes": "1 m, 13 kg", "ability1": "Overgrow", "ability2": "Chlorophyll"},
+{"name": "Venusaur", "sizes": "2.4 m, 155.5 kg", "ability1": "Thick Fat", "ability2": null},
+{"name": "Charmeleon", "sizes": "1.1 m, 19 kg", "ability1": "Blaze", "ability2": "Solar Power"},
+{"name": "Charizard", "sizes": "1.7 m, 90.5 kg", "ability1": "Blaze", "ability2": "Solar Power"},
+{"name": "Venusaur", "sizes": "24 m, 0 kg", "ability1": "Overgrow", "ability2": "Chlorophyll"},
+{"name": "Venusaur", "sizes": "2 m, 100 kg", "ability1": "Overgrow", "ability2": "Chlorophyll"},
+{"name": "Charizard", "sizes": "1.7 m, 110.5 kg", "ability1": "Tough Claws", "ability2": null},
+{"name": "Charizard", "sizes": "1.7 m, 100.5 kg", "ability1": "Drought", "ability2": null},
+{"name": "Blastoise", "sizes": "25 m, 0 kg", "ability1": "Torrent", "ability2": "Rain Dish"},
+{"name": "Squirtle", "sizes": "0.5 m, 9 kg", "ability1": "Torrent", "ability2": "Rain Dish"},
+{"name": "Wartortle", "sizes": "1 m, 22.5 kg", "ability1": "Torrent", "ability2": "Rain Dish"},
+{"name": "Charizard", "sizes": "28 m, 0 kg", "ability1": "Blaze", "ability2": "Solar Power"},
+{"name": "Blastoise", "sizes": "1.6 m, 85.5 kg", "ability1": "Torrent", "ability2": "Rain Dish"},
+{"name": "Blastoise", "sizes": "1.6 m, 101.1 kg", "ability1": "Mega Launcher", "ability2": null},
+{"name": "Butterfree", "sizes": "1.1 m, 32 kg", "ability1": "Compound Eyes", "ability2": "Tinted Lens"},
+{"name": "Metapod", "sizes": "0.7 m, 9.9 kg", "ability1": "Shed Skin", "ability2": null},
+{"name": "Caterpie", "sizes": "0.3 m, 2.9 kg", "ability1": "Shield Dust", "ability2": "Run Away"}
 ]
