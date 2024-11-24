@@ -93,6 +93,8 @@ TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
 
 
+# uncomment this ti use mozilla Firefox as default browser
+# USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101 Firefox/102.0"
 
 # REDIRECT_ENABLED = True
 # REDIRECT_MAX_TIMES = 5
