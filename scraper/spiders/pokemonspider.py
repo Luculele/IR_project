@@ -28,7 +28,7 @@ class PokemonBulbapediaSpider(scrapy.Spider):
                         'number': number_,
                         'image' : tds[1].css('a img::attr(src)').get(),
                         'name': tds[2].css('a::text').get().strip(),
-                        'form': None,
+                        'form': "No form",
                         'type1': tds[3].css('a span::text').get().strip(),
                         'type2': tds[4].css('a span::text').get().strip(),
                     }
@@ -37,9 +37,9 @@ class PokemonBulbapediaSpider(scrapy.Spider):
                         'number': number_,
                         'image' : tds[1].css('a img::attr(src)').get(),
                         'name': tds[2].css('a::text').get().strip(),
-                        'form': None,
+                        'form': "No form",
                         'type1': tds[3].css('a span::text').get().strip(),
-                        'type2': None,
+                        'type2': "No type",
                     }
             
             except:
@@ -60,7 +60,7 @@ class PokemonBulbapediaSpider(scrapy.Spider):
                         'name': tds[1].css('a::text').get().strip(),
                         'form': tds[1].css('small::text').get(),
                         'type1': tds[2].css('a span::text').get().strip(),
-                        'type2': None,
+                        'type2': "No type",
                     }
     
 
@@ -83,11 +83,11 @@ class PokemonDatabaseSpider(scrapy.Spider):
             types = pokemon.css('td.cell-icon a.type-icon::text').getall()
             pokemon_data = {
                 'id':       id_,
-                'number':       pokemon.css('td.cell-num.cell-fixed span.infocard-cell-data::text').get(),
+                'number':   pokemon.css('td.cell-num.cell-fixed span.infocard-cell-data::text').get(),
                 'name':     pokemon.css('td.cell-name a.ent-name::text').get(),
-                'form':     form,
+                'form':     form if form is not None else "No form",
                 'type1':    types[0],
-                'type2':    types[1] if len(types) > 1 else None,
+                'type2':    types[1] if len(types) > 1 else "No type",
                 'total':    stats[0],
                 'hp':       stats[1],
                 'attack':   stats[2],
