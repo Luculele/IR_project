@@ -1,8 +1,8 @@
 import json
 
-# this file is used to merge data from dei json of pokemonDB(file1) and Bulbapedia(file2)
-# take the images from Bulbapedia and put them with the informations from pokemonDB
-# save everything in the output path
+# This script merges data from two JSON files: PokémonDB (file1) and Bulbapedia (file2).
+# It extracts images from Bulbapedia and combines them with information from PokémonDB.
+# The merged data is saved to the specified output path.
 def merge_json_files (file1, file2, output):
     with open(file1, 'r', encoding='utf-8') as f1, open(file2, 'r', encoding='utf-8') as f2:
         d1 = json.load(f1)
@@ -23,7 +23,7 @@ def merge_json_files (file1, file2, output):
 if __name__ == "__main__":
 
     file1 = '../data/pokemonsDatabaseAll.json'
-    file2 = '../data/pokemonsBulbapediaAll.json'
+    file2 = '../data/pokemonBulbapediaAll.json'
     output = '../data/final_data/bigPokemonData.json'
 
     merge_json_files(file1, file2, output)

@@ -27,3 +27,13 @@ PYTHON
 
 REMEMBER:
 remove all pushing files from directories
+
+    Solr
+
+    bin/solr start 
+    bin/solr stop
+    bin/solr create -c ex2
+    bin/solr post -c ex2 example/exampledocs/*
+    bin/solr delete -c ex2
+    bin/solr post -c films example/films/films.json 
+    

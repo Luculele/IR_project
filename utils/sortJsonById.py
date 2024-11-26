@@ -1,8 +1,8 @@
 import json
 
-# this function is used tu sort all the json objects in a json file by the id field
-# I use this because after apply a merge all the pokemons are unordered
-# so always call this function after a merge 
+# This function sorts all JSON objects in a JSON file by the 'id' field.
+# It is used because, after merging, the Pokémon data may become unordered.
+# Always call this function after performing a merge to ensure the data is properly sorted.
 def sort_json_by_id(input, output):
     
     with open(input, 'r', encoding='utf-8') as f:
