@@ -35,12 +35,15 @@ const SearchBar = () => {
       <button onClick={handleSearch} style={{ padding: "10px" }}>
         Cerca
       </button>
-      {loading && <p>Caricamento...</p>}
+      {loading && <p>Loading...</p>}
       <ul>
         {results.map((pokemon, index) => (
           <li key={index}>
-            <strong>{pokemon.name}</strong> - Tipo:{" "}
-            {pokemon.type || "Sconosciuto"}
+            <strong>{pokemon.name}</strong> - type:{" "}
+            <span className="type">
+              {pokemon.type1 || "Not Available"}
+              {pokemon.type2 != "No type" ? `, ${pokemon.type2}` : ""}
+            </span>
           </li>
         ))}
       </ul>
