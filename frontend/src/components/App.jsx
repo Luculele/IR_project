@@ -1,14 +1,12 @@
-import Hello from "./Hello.jsx";
+import React from "react";
+import SearchBar from "./Searchbar.jsx";
 
-function App() {
+const App = () => {
   return (
     <div className="App">
-      Hello world!
-      <div className="Hello">
-        <Hello />
-      </div>
+      <SearchBar />
     </div>
   );
-}
+};
 
 export default App;
