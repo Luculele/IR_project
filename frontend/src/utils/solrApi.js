@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const SOLR_BASE_URL = "http://localhost:8983/solr/pokemon";
+const SOLR_BASE_URL = "/api";
 
 export const searchPokemon = async (query) => {
   try {
