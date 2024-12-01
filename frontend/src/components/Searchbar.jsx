@@ -1,54 +1,60 @@
 import React, { useState } from "react";
 import { searchPokemon } from "../utils/solrApi";
+import "../index.css"; // Import global styles
 
 const SearchBar = () => {
-  const [query, setQuery] = useState("");
-  const [results, setResults] = useState([]);
-  const [loading, setLoading] = useState(false);
+    const [query, setQuery] = useState("");
+    const [results, setResults] = useState([]);
+    const [loading, setLoading] = useState(false);
 
-  const handleSearch = async () => {
-    setLoading(true);
-    try {
-      const data = await searchPokemon(query);
-      setResults(data);
-    } catch (error) {
-      console.error("Errore durante la ricerca:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    const handleSearch = async () => {
+        if (!query.trim()) return; // Prevent empty searches
+        setLoading(true);
+        try {
+            const data = await searchPokemon(query);
+            setResults(data);
+        } catch (error) {
+            console.error("Errore durante la ricerca:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-  return (
-    <div style={{ padding: "20px" }}>
-      <h1>Pokemon Search</h1>
-      <input
-        type="text"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        placeholder="Cerca un Pokémon"
-        style={{
-          padding: "10px",
-          width: "300px",
-          marginRight: "10px",
-        }}
-      />
-      <button onClick={handleSearch} style={{ padding: "10px" }}>
-        Cerca
-      </button>
-      {loading && <p>Loading...</p>}
-      <ul>
-        {results.map((pokemon, index) => (
-          <li key={index}>
-            <strong>{pokemon.name}</strong> - type:{" "}
-            <span className="type">
-              {pokemon.type1 || "Not Available"}
-              {pokemon.type2 != "No type" ? `, ${pokemon.type2}` : ""}
-            </span>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+    const handleKeyPress = (event) => {
+        if (event.key === "Enter") {
+            handleSearch();
+        }
+    };
+
+    return (
+        <div className="search-container">
+            <div className="search-bar">
+                <input
+                    type="text"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    onKeyDown={handleKeyPress} // Listen for key presses
+                    placeholder="Pokémon name"
+                    className="search-input"
+                />
+                <button onClick={handleSearch} className="search-button">
+                    Submit
+                </button>
+            </div>
+            {loading && <p className="loading-text">Loading...</p>}
+            <ul className="results-list">
+                {results.map((pokemon, index) => (
+                    <li key={index}>
+                        <strong>{pokemon.name}</strong> - type:{" "}
+                        <span className="type">
+                            {pokemon.type1 || "Not Available"}
+                            {pokemon.type2 !== "No type" ? `, ${pokemon.type2}` : ""}
+                        </span>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
 };
 
 export default SearchBar;
