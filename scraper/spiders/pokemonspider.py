@@ -12,6 +12,7 @@ class PokemonBulbapediaSpider(scrapy.Spider):
     ]
 
     def parse(self, response):
+        id_ = 1
         number_ = 0
         for pokemon in response.css('table.roundy tbody tr[style="background:#FFF"]'):
             tds = pokemon.css('td')  
@@ -25,6 +26,7 @@ class PokemonBulbapediaSpider(scrapy.Spider):
 
                 if len(tds) == 5:    
                     yield {
+                        'id':       id_,
                         'number': number_,
                         'image' : tds[1].css('a img::attr(src)').get(),
                         'name': tds[2].css('a::text').get().strip(),
@@ -34,6 +36,7 @@ class PokemonBulbapediaSpider(scrapy.Spider):
                     }
                 else :
                     yield {
+                        'id':       id_,
                         'number': number_,
                         'image' : tds[1].css('a img::attr(src)').get(),
                         'name': tds[2].css('a::text').get().strip(),
@@ -41,11 +44,14 @@ class PokemonBulbapediaSpider(scrapy.Spider):
                         'type1': tds[3].css('a span::text').get().strip(),
                         'type2': "No type",
                     }
+
+                id_ += 1
             
             except:
 
                 if len(tds) == 4:    
                     yield {
+                        'id':       id_,
                         'number': number_,
                         'image' : tds[0].css('a img::attr(src)').get(),
                         'name': tds[1].css('a::text').get().strip(),
@@ -55,6 +61,7 @@ class PokemonBulbapediaSpider(scrapy.Spider):
                     }
                 else:
                     yield {
+                        'id':       id_,
                         'number': number_,
                         'image' : tds[0].css('a img::attr(src)').get(),
                         'name': tds[1].css('a::text').get().strip(),
@@ -62,6 +69,8 @@ class PokemonBulbapediaSpider(scrapy.Spider):
                         'type1': tds[2].css('a span::text').get().strip(),
                         'type2': "No type",
                     }
+                
+                id_ += 1
     
 
 # Spider for Bulbapedia's Pokémon Database
@@ -114,108 +123,90 @@ class PokemonDatabaseSpider(scrapy.Spider):
         paragraphs = main.css('ul.list-nav.panel.panel-nav ~ p')
         
         pokemon_data['Description'] = '\n'.join(paragraph.xpath('string(.)').get().strip() for paragraph in paragraphs)
-
+                
         yield pokemon_data
 
 
-# class PokemonSerebiiGen1(scrapy.Spider):
-#     name = "PokemonSerebiiGen1"
-#     start_urls = [
-#         'https://pokemondb.net/pokedex/all'
-#     ]
-
-#     def parse(self, response):
-#         main = response.css('main *')
-
-#         buttons = main.css('img.typeimg')
 
 
+class PokemonDatabaseSpider(scrapy.Spider):
+    name = 'pokemon_fandom'
+    start_urls = [
+        'https://pokemon.fandom.com/wiki/List_of_Pok%C3%A9mon_by_evolution'
+    ]
 
+    def parse(self, response):
+        main = response.css('main')
 
+        tables = main.css('div#content div#mw-content-text div.mw-parser-output')
+        table = tables.css('table')
 
-
-
-
-# class PokemonShowdownSpider(scrapy.Spider):
-#     name = "PokemonShowdown"
-
-#     def start_requests(self):
-#         yield scrapy.Request(
-#             url='https://dex.pokemonshowdown.com/pokemon',
-#             callback=self.parse,
-#             meta={
-#                 "playwright": True,
-#                 "playwright_page_methods": [
-#                     PageMethod('set_default_timeout', 0),
-#                     PageMethod('wait_for_selector', 'div.pfx-panel div.pfx-body div.results ul li:nth-child(n+3)'),
-#                 ],
-#             },
-#         )
-
+        for table in tables:
+            trs = table.css('tbody tr:nth-child(n+2)')
     
-#     async def parse(self, response):
+            for tr in trs:
+                ev_array = []
+                tds = tr.css('td:nth-child(n+2)')
+                for td in tds:
+                    a_s = td.css('a')
+                    for a in a_s:
+                        ev_array.append(a.css('::text').get())
+                
+                yield {
+                    'evolution_line' : ev_array
+                }
 
-#         lis = response.css('div.pfx-panel div.pfx-body div.results ul li')
 
-#         for li in lis:
-#             new_page = li.css('a::attr(href)').get()
 
-#             if new_page is not None:
-#                 normalized_url = response.urljoin(new_page)
-#                 yield scrapy.Request(
-#                     url=normalized_url,
-#                     callback=self.parse_pokemon_page,
-#                     meta={
-#                         "playwright": True,
-#                         "playwright_page_methods": [
-#                             PageMethod('set_default_timeout', 0),
-#                             PageMethod('wait_for_selector', 'div.pfx-panel div.pfx-body.dexentry'),
-#                         ],
-#                     },
-#                     dont_filter=True,  
-#                 )
-    
-#     async def parse_pokemon_page(self, response):
+class PokemonDatabaseMegaFormsSpider(scrapy.Spider):
+    name = 'pokemon_megaforms'
+    start_urls = [
+        'https://bulbapedia.bulbagarden.net/wiki/Mega_Evolution',
+    ]
 
-#         pokemon_box = response.css('div.pfx-panel div.pfx-body.dexentry')
-
-#         pokemon_data = {}
-
-#         pokemon_data['name'] = pokemon_box.css('h1 a::text').get()
-
-#         sizes = pokemon_box.css('dl.sizeentry')
-#         pokemon_data['sizes'] = sizes.css('dd::text').get()
+    def parse(self, response):
+        table_wrapper = response.css('div#globalWrapper div#column-content div#content div#bodyContent div#mw-content-text div.mw-parser-output')
+        tables = table_wrapper.css('table')
         
-#         abilities = pokemon_box.css('dl.abilityentry')
-#         pokemon_data['ability1'] = abilities.css('dd a::text').get(default="Unknown")
-#         pokemon_data['ability2'] = abilities.css('dd a em::text').get(default=None)
-    
-#         if not pokemon_data['ability1']:
-#             self.logger.warning(f"No ability1 found for {pokemon_data['name']}")
+        old_number = 0
+        for table in tables[:2]:
+            trs = table.css('tbody tr:nth-child(n+3):not(:last-child)')
 
-#         # stats_table = pokemon_box.css('dl:not(.specific-class) dd:first-of-type table tbody')
-
-#         # if stats_table:
-#         #     pokemon_data['min_hp'] = stats_table.css('tr:nth-child(2) td:nth-child(4) small::text').get()
-#         #     pokemon_data['max_hp'] = stats_table.css('tr:nth-child(2) td:nth-child(5) small').get()
-
-#         #     trs = stats_table.css('tr:nth-child(n+3)')
-#         #     for i, stat in enumerate({'attack', 'defense', 'sp_atk', 'sp_def', 'speed'}):
-#         #         if i < len(trs):
-#         #             pokemon_data[f'min_{stat}'] = trs[i].css('td:nth-child(3) small::text').get(default="N/A")
-#         #             pokemon_data[f'max_{stat}'] = trs[i].css('td:nth-child(6) small::text').get(default="N/A")
-#         #         else:
-#         #             pokemon_data[f'min_{stat}'] = "N/A"
-#         #             pokemon_data[f'max_{stat}'] = "N/A"
-#         # else:
-#         #     self.logger.warning(f"No stats table found for {pokemon_data['name']}")
-
-#         yield pokemon_data
+            for tr in trs:
+                tds = tr.css('td')
+                
+                if len(tds) == 10:
+                    old_number = tds[0].css('::text').get()
+                    yield {
+                        'number': old_number.strip(),
+                        'image': tds[5].css('a img::attr(src)').get(),
+                    }
+                else:
+                    yield {
+                        'number': old_number,
+                        'image': tds[0].css('a img::attr(src)').get(),
+                    }
 
 
 
-        
+class PokemonOtherFormsSpider(scrapy.Spider):
+    name = 'pokemon_otherforms'
+    start_urls = [
+        'https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences',
+    ]
 
+    def parse(self, response):
+        divs = response.css('div[style*="flex: 1"]')
+        for div in divs:
+            name = div.css('::text').get().strip() if div.css('::text') else None
 
+            image = None
+            link = div.css('a')
+            if link:
+                image = link.css('img::attr(src)').get()
 
- 
+            if name or image: 
+                yield {
+                    'name': name,
+                    'image': image,
+                }
