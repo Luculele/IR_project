@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { searchPokemon } from "../utils/solrApi";
-import NavBar from "./NavBar";
+import Filters from "./Filters";
 import SearchBar from "./Searchbar";
 import "../index.css";
 
@@ -8,35 +8,22 @@ const App = () => {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [filters, setFilters] = useState({});
 
-  // Filter state with min/max ranges
-  const [filters, setFilters] = useState({
-    total: [175, 1125],
-    hp: [1, 255],
-    attack: [5, 190],
-    defense: [5, 250],
-    sp_atk: [10, 194],
-    sp_def: [20, 255],
-    speed: [5, 200],
-    form: "",
-    type1: "",
-    type2: "",
-  });
-
-  const handleFilterChange = (key, value) => {
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      [key]: value,
-    }));
+  const handleFiltersChange = (updatedFilters) => {
+    setFilters(updatedFilters);
+    console.log("Updated filters:", updatedFilters);
   };
 
   return (
-    <div className="app-container">
-      {/* Search Bar */}
-      <SearchBar filters={filters} />
+    <div className="app-container flex flex-row">
+      <div className="">
+        <SearchBar filters={filters} />
+      </div>
 
-      {/* Navigation Bar for filters */}
-      {/*<NavBar filters={filters} onFilterChange={handleFilterChange} />*/}
+      <div className="bg-red-100">
+        <Filters onFiltersChange={handleFiltersChange} />
+      </div>
     </div>
   );
 };

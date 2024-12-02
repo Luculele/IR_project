@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { searchPokemon } from "../utils/solrApi";
-import "../index.css"; // Import global styles
-
+import "../index.css";
 const SearchBar = () => {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
@@ -14,7 +13,7 @@ const SearchBar = () => {
       const data = await searchPokemon(query);
       setResults(data);
     } catch (error) {
-      console.error("Errore durante la ricerca:", error);
+      console.error("Error during the searching", error);
     } finally {
       setLoading(false);
     }

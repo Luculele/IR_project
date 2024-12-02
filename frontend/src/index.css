@@ -1,8 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* Global styles */
 body {
   margin: 0;
   padding: 0;
-  background-image: url('../img/charming-bulbasaur-resting-desktop-wallpaper.jpg'); /* Path from the public folder */
+  background-image: url("../img/charming-bulbasaur-resting-desktop-wallpaper.jpg"); /* Path from the public folder */
   background-size: cover; /* Ensures the image covers the entire viewport */
   background-repeat: no-repeat; /* Prevents tiling */
   background-position: center center; /* Centers the image */
@@ -46,7 +50,7 @@ body {
 .search-button {
   padding: 15px 20px;
   font-size: 16px;
-  background-color: #007BFF;
+  background-color: #007bff;
   color: white;
   border: none;
   border-top-right-radius: 50px;
