@@ -1045,6 +1045,7 @@
     <field name="sp_def" type="pint" indexed="true" stored="true" />
     <field name="speed" type="pint" indexed="true" stored="true" />
     <field name="Description" type="text_general" indexed="true" stored="true" multiValued="false" />
-    <field name="image" type="string" indexed="false" stored="true" />
+    <field name="image" type="string" indexed="true" stored="true" />
+    <field name="evolution_line" type="string" multiValued="true" indexed="true" stored="true"/>
 
 </schema>
