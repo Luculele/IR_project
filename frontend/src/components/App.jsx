@@ -17,6 +17,7 @@ const App = () => {
 
   return (
     <div className="app-container flex flex-row">
+      <div class="Suggestions"></div>
       <div className="">
         <SearchBar filters={filters} />
       </div>
