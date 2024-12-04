@@ -11,6 +11,7 @@ const SearchBar = () => {
     setLoading(true);
     try {
       const data = await searchPokemon(query);
+
       setResults(data);
     } catch (error) {
       console.error("Error during the searching", error);
