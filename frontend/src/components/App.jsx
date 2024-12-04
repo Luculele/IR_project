@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { searchPokemon } from "../utils/solrApi";
 import Filters from "./Filters";
 import SearchBar from "./Searchbar";
+import Logo from "./Logo";
 import "../index.css";
 
 const App = () => {
@@ -17,7 +18,10 @@ const App = () => {
 
   return (
     <div className="app-container flex flex-row">
-      <div class="Suggestions"></div>
+      <div className="Suggestions"></div>
+      <div className="">
+        <Logo />
+      </div>
       <div className="">
         <SearchBar filters={filters} />
       </div>
