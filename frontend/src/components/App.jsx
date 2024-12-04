@@ -4,6 +4,7 @@ import Filters from "./Filters";
 import SearchBar from "./Searchbar";
 import Logo from "./Logo";
 import "../index.css";
+import Results from "./Results";
 
 const App = () => {
   const [query, setQuery] = useState("");
@@ -25,8 +26,10 @@ const App = () => {
       <div className="">
         <SearchBar filters={filters} />
       </div>
-
-      <div className="bg-red-100">
+      <div className="pokemon-results hidden">
+        <Results />
+      </div>
+      <div className="">
         <Filters onFiltersChange={handleFiltersChange} />
       </div>
     </div>
