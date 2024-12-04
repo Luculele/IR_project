@@ -26,14 +26,14 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="search-container">
+    <div className="search-container w-[400px]">
       <div className="search-bar">
         <input
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={handleKeyPress}
-          placeholder="Pokémon name"
+          placeholder="Please enter your query"
           className="search-input"
         />
         <button onClick={handleSearch} className="search-button">
