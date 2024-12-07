@@ -2,20 +2,18 @@ import React, { useState } from "react";
 import { searchPokemon } from "../utils/solrApi";
 import "../index.css";
 import glass from "../img/magnifying_search_searching.png";
-const SearchBar = () => {
+const SearchBar = ({ setResults, setLoading, filters }) => {
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState([]);
-  const [loading, setLoading] = useState(false);
 
   const handleSearch = async () => {
-    if (!query.trim()) return; // Prevent empty searches
+    if (!query.trim()) return;
     setLoading(true);
     try {
       const data = await searchPokemon(query);
-
+      console.log("Data from API:", data);
       setResults(data);
     } catch (error) {
-      console.error("Error during the searching", error);
+      console.error("Error during search:", error);
     } finally {
       setLoading(false);
     }
@@ -39,24 +37,12 @@ const SearchBar = () => {
           className="px-5 py-3 text-base outline-none border-none w-[300px] h-[55px] rounded-tl-full rounded-bl-full"
         />
         <button
-            onClick={handleSearch}
-            className="px-6 py-4 text-base bg-blue-500 border-none rounded-tr-full rounded-br-full cursor-pointer transition-colors duration-300 hover:bg-blue-600"
+          onClick={handleSearch}
+          className="px-6 py-4 text-base bg-blue-500 border-none rounded-tr-full rounded-br-full cursor-pointer transition-colors duration-300 hover:bg-blue-600"
         >
-          <img src={glass} alt="Glass" className="w-6"/>
+          <img src={glass} alt="Glass" className="w-6" />
         </button>
       </div>
-      {loading && <p className="loading-text">Loading...</p>}
-      <ul className="results-list">
-        {results.map((pokemon, index) => (
-          <li key={index}>
-            <strong>{pokemon.name}</strong> - type:{" "}
-            <span className="type">
-              {pokemon.type1 || "Not Available"}
-              {pokemon.type2 !== "No type" ? `, ${pokemon.type2}` : ""}
-            </span>
-          </li>
-        ))}
-      </ul>
     </div>
   );
 };
