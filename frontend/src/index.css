@@ -47,17 +47,17 @@ body {
   border-bottom-left-radius: 50px;
 }
 
-.search-button {
-  padding: 15px 20px;
-  font-size: 16px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-top-right-radius: 50px;
-  border-bottom-right-radius: 50px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
+/*.search-button {*/
+/*  padding: 15px 20px;*/
+/*  font-size: 16px;*/
+/*  background-color: #007bff;*/
+/*  color: white;*/
+/*  border: none;*/
+/*  border-top-right-radius: 50px;*/
+/*  border-bottom-right-radius: 50px;*/
+/*  cursor: pointer;*/
+/*  transition: background-color 0.3s ease;*/
+/*}*/
 
 .search-button:hover {
   background-color: #0056b3; /* Darker blue on hover */
