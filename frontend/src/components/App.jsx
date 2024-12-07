@@ -18,7 +18,7 @@ const App = () => {
   };
 
   return (
-    <div className="app-container flex flex-row">
+    <div className="app-container flex flex-row bg-bulbasaur min-h-screen bg-cover bg-center bg-no-repeat">
       <div className="Suggestions"></div>
       <div className="">
         <Logo />

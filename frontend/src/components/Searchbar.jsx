@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { searchPokemon } from "../utils/solrApi";
 import "../index.css";
-const SearchBar = () => {
+const SearchBar = ({ filters }) => {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
