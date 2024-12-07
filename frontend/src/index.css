@@ -1,25 +1,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-.search-header {
-  margin-bottom: 20px;
-  color: #333;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-}
-
-.loading-text {
-  margin-top: 20px;
-  color: #555;
-}
-
-.results-list {
-  margin-top: 20px;
-  list-style-type: none;
-  padding: 0;
-}
-
-.results-list li {
-  margin-bottom: 10px;
-  font-size: 16px;
-}
