@@ -45,10 +45,10 @@ const SearchBar = () => {
           <img src={glass} alt="Glass" className="w-6"/>
         </button>
       </div>
-      {loading && <p className="loading-text">Loading...</p>}
-      <ul className="results-list">
+      {loading && <p className="mt-5 text-gray-600">Loading...</p>}
+      <ul className="mt-5 list-none p-0 space-y-2">
         {results.map((pokemon, index) => (
-          <li key={index}>
+          <li key={index} className="text-base mb-2">
             <strong>{pokemon.name}</strong> - type:{" "}
             <span className="type">
               {pokemon.type1 || "Not Available"}
