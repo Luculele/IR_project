@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { searchPokemon } from "../utils/solrApi";
 import "../index.css";
-import image from "../img/magnifying_search_searching.png";
+import glass from "../img/magnifying_search_searching.png";
 const SearchBar = () => {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
@@ -28,21 +28,21 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="search-container w-[400px]">
-      <div className="search-bar">
+    <div className="flex flex-col items-center justify-start h-screen pt-[15vh] w-[400px]">
+      <div className="flex items-center rounded-full overflow-hidden shadow-lg">
         <input
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={handleKeyPress}
           placeholder="Please enter your query"
-          className="search-input"
+          className="px-5 py-3 text-base outline-none border-none w-[300px] h-[55px] rounded-tl-full rounded-bl-full"
         />
         <button
             onClick={handleSearch}
             className="px-6 py-4 text-base bg-blue-500 border-none rounded-tr-full rounded-br-full cursor-pointer transition-colors duration-300 hover:bg-blue-600"
         >
-          <img src={image} alt="Glass" className="w-6"/>
+          <img src={glass} alt="Glass" className="w-6"/>
         </button>
       </div>
       {loading && <p className="loading-text">Loading...</p>}
