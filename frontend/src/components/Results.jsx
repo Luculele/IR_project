@@ -49,10 +49,12 @@ const Results = ({ results, loading }) => {
             <h3 className="text-lg font-semibold text-gray-800 text-center">
               {pokemon.name}
             </h3>
-            {pokemon.form && String(pokemon.form).trim() !== "No form" && (
+            {pokemon.form && String(pokemon.form).trim() !== "No form" ? (
               <h3 className="text-lg font-semibold text-gray-500 text-center">
                 {pokemon.form}
               </h3>
+            ) : (
+              <div className="h-6"></div>
             )}
 
             <p className="text-sm text-gray-600 mt-2 text-center h-7">
@@ -66,10 +68,10 @@ const Results = ({ results, loading }) => {
               >
                 {pokemon.type1}
               </span>
-              {pokemon.type2 !== "No type" && (
+              {pokemon.type2 && String(pokemon.type2).trim() !== "No type" && (
                 <span
                   className={`px-3 py-1 text-xs font-bold rounded-full ${
-                    typeColors[pokemon.type2] || "bg-gray-300 text-black"
+                    typeColors[pokemon.type2]
                   }`}
                 >
                   {pokemon.type2}

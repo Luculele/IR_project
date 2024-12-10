@@ -27,7 +27,7 @@ export const searchPokemon = async (
       params: {
         q: query,
         defType: "edismax",
-        qf: "name^2 Description type1 type2",
+        qf: "name^2 Description type1 type2 evolution_line",
         start: page * rowsPerPage,
         rows: rowsPerPage,
         wt: "json",
