@@ -72,104 +72,104 @@ const Filters = ({ onFilterChange }) => {
   };
 
   return (
-      <div className="fixed top-53 right-9 h-full w-64 p-4 overflow-y-auto">
-        <h2 className="text-xl font-bold mb-4">Filters</h2>
+    <div className="fixed top-53 right-9 h-full w-64 p-4 overflow-y-auto">
+      <h2 className="text-xl font-bold mb-4">Filters</h2>
 
-        {Object.entries(filters)
-            .filter(([key, value]) => Array.isArray(value))
-            .map(([key, range]) => (
-                <div key={key} className="mb-6">
-                  <label htmlFor={key} className="block font-medium mb-1 capitalize">
-                    {key.replace("_", " ")}:
-                  </label>
-                  <div className="mb-2 flex justify-between text-sm text-gray-700 items-center">
-                    <input
-                        type="number"
-                        min={attributeRanges[key].min}
-                        max={filters[key][1]}
-                        value={filters[key][0]}
-                        onBlur={(e) => {
-                          const newMin = Number(e.target.value);
-                          const clampedMin = Math.max(
-                              attributeRanges[key].min,
-                              Math.min(newMin, filters[key][1])
-                          );
-                          handleSliderChange(key, [clampedMin, filters[key][1]]);
-                        }}
-                        onChange={(e) => {
-                          const newMin = Number(e.target.value);
-                          const updatedFilters = { ...filters };
-                          updatedFilters[key][0] = newMin;
-                          setFilters(updatedFilters);
-                        }}
-                        className="w-16 text-center border border-gray-300 rounded-md"
-                    />
-                    <span className="mx-2">to</span>
-                    <input
-                        type="number"
-                        min={filters[key][0]}
-                        max={attributeRanges[key].max}
-                        value={filters[key][1]}
-                        onBlur={(e) => {
-                          const newMax = Number(e.target.value);
-                          const clampedMax = Math.min(
-                              attributeRanges[key].max,
-                              Math.max(newMax, filters[key][0])
-                          );
-                          handleSliderChange(key, [filters[key][0], clampedMax]);
-                        }}
-                        onChange={(e) => {
-                          const newMax = Number(e.target.value);
-                          const updatedFilters = { ...filters };
-                          updatedFilters[key][1] = newMax;
-                          setFilters(updatedFilters);
-                        }}
-                        className="w-16 text-center border border-gray-300 rounded-md"
-                    />
-                  </div>
-                  <Slider
-                      value={filters[key]}
-                      onChange={(e) => {
-                        handleSliderChange(key, e.value);
-                      }}
-                      className="w-full"
-                      range
-                      min={attributeRanges[key].min}
-                      max={attributeRanges[key].max}
-                  />
-                </div>
-            ))}
-
-        <div className="mb-6">
-          <label htmlFor="type1" className="block font-medium mb-1">
-            Type 1:
-          </label>
-          <Dropdown
-              id="type1"
-              value={filters.type1}
-              onChange={(e) => handleTypeChange("type1", e.value)}
-              options={[...Object.keys(typeColors)]}
-              optionLabel="name"
-              placeholder="Select Type 1"
+      {Object.entries(filters)
+        .filter(([key, value]) => Array.isArray(value))
+        .map(([key, range]) => (
+          <div key={key} className="mb-6">
+            <label htmlFor={key} className="block font-medium mb-1 capitalize">
+              {key.replace("_", " ")}:
+            </label>
+            <div className="mb-2 flex justify-between text-sm text-gray-700 items-center">
+              <input
+                type="number"
+                min={attributeRanges[key].min}
+                max={filters[key][1]}
+                value={filters[key][0]}
+                onBlur={(e) => {
+                  const newMin = Number(e.target.value);
+                  const clampedMin = Math.max(
+                    attributeRanges[key].min,
+                    Math.min(newMin, filters[key][1])
+                  );
+                  handleSliderChange(key, [clampedMin, filters[key][1]]);
+                }}
+                onChange={(e) => {
+                  const newMin = Number(e.target.value);
+                  const updatedFilters = { ...filters };
+                  updatedFilters[key][0] = newMin;
+                  setFilters(updatedFilters);
+                }}
+                className="w-16 text-center border border-gray-300 rounded-md"
+              />
+              <span className="mx-2">to</span>
+              <input
+                type="number"
+                min={filters[key][0]}
+                max={attributeRanges[key].max}
+                value={filters[key][1]}
+                onBlur={(e) => {
+                  const newMax = Number(e.target.value);
+                  const clampedMax = Math.min(
+                    attributeRanges[key].max,
+                    Math.max(newMax, filters[key][0])
+                  );
+                  handleSliderChange(key, [filters[key][0], clampedMax]);
+                }}
+                onChange={(e) => {
+                  const newMax = Number(e.target.value);
+                  const updatedFilters = { ...filters };
+                  updatedFilters[key][1] = newMax;
+                  setFilters(updatedFilters);
+                }}
+                className="w-16 text-center border border-gray-300 rounded-md"
+              />
+            </div>
+            <Slider
+              value={filters[key]}
+              onChange={(e) => {
+                handleSliderChange(key, e.value);
+              }}
               className="w-full"
-          />
-        </div>
+              range
+              min={attributeRanges[key].min}
+              max={attributeRanges[key].max}
+            />
+          </div>
+        ))}
 
-        <div className="mb-6">
-          <label htmlFor="type2" className="block font-medium mb-1">
-            Type 2:
-          </label>
-          <Dropdown
-              id="type2"
-              value={filters.type2}
-              onChange={(e) => handleTypeChange("type2", e.value)}
-              options={[...Object.keys(typeColors)]}
-              optionLabel="name"
-              placeholder="Select Type 2"
-              className="w-full"
-          />
-        </div>
+      <div className="mb-6">
+        <label htmlFor="type1" className="block font-medium mb-1">
+          Type 1:
+        </label>
+        <Dropdown
+          id="type1"
+          value={filters.type1}
+          onChange={(e) => handleTypeChange("type1", e.value)}
+          options={[...Object.keys(typeColors)]}
+          optionLabel="name"
+          placeholder="Select Type 1"
+          className="w-full"
+        />
       </div>
+
+      <div className="mb-6">
+        <label htmlFor="type2" className="block font-medium mb-1">
+          Type 2:
+        </label>
+        <Dropdown
+          id="type2"
+          value={filters.type2}
+          onChange={(e) => handleTypeChange("type2", e.value)}
+          options={[...Object.keys(typeColors)]}
+          optionLabel="name"
+          placeholder="Select Type 2"
+          className="w-full"
+        />
+      </div>
+    </div>
   );
 };
 
