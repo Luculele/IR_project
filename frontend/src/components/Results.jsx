@@ -34,7 +34,10 @@ const Results = ({ results, loading }) => {
   }
 
   return (
-      <div className="results-container p-4 bg-gray-100 rounded shadow">
+      <div
+          className="results-container p-4  rounded max-h-[500px] overflow-y-auto "
+          style={{ scrollbarWidth: "thin", scrollbarColor: "#cbd5e1 #f1f5f9" }}
+      >
         <h2 className="text-xl font-bold mb-4 text-center">Search Results</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {results.map((pokemon) => (
