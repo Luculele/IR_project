@@ -5,7 +5,7 @@ export default {
     extend: {
       backgroundImage: {
         bulbasaur:
-          "url('src/img/charming-bulbasaur-resting-desktop-wallpaper.jpg')",
+          "url('/img/charming-bulbasaur-resting-desktop-wallpaper.jpg')",
       },
     },
   },
