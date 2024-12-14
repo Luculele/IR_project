@@ -100,7 +100,7 @@ const Filters = ({ onFilterChange }) => {
   };
 
   return (
-    <div className="fixed top-44 right-0 h-full w-64 bg-gray-100 p-4 shadow-lg overflow-y-auto">
+    <div className="fixed top-53 right-9 h-full w-64 p-4 overflow-y-auto">
       <h2 className="text-xl font-bold mb-4">Filters</h2>
 
       {/* Numeric Filters with Sliders */}
