@@ -35,7 +35,7 @@ const Results = ({ results, loading }) => {
 
   return (
       <div
-          className="results-container p-4  rounded max-h-[500px] overflow-y-auto "
+          className="results-container p-4 rounded max-h-[600px] overflow-y-auto"
           style={{ scrollbarWidth: "thin", scrollbarColor: "#cbd5e1 #f1f5f9" }}
       >
         {/*<h2 className="text-xl font-bold mb-4 text-center">Search Results</h2>*/}
