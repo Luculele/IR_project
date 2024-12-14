@@ -148,7 +148,7 @@ const Filters = ({ onFilterChange }) => {
           id="type1"
           value={filters.type1}
           onChange={(e) => handleTypeChange("type1", e.value)}
-          options={["Any", ...Object.keys(typeColors)]}
+          options={[...Object.keys(typeColors)]}
           optionLabel="name"
           placeholder="Select Type 1"
           className="w-full"
@@ -163,7 +163,7 @@ const Filters = ({ onFilterChange }) => {
           id="type2"
           value={filters.type2}
           onChange={(e) => handleTypeChange("type2", e.value)}
-          options={["Any", ...Object.keys(typeColors)]}
+          options={[...Object.keys(typeColors)]}
           optionLabel="name"
           placeholder="Select Type 2"
           className="w-full"
