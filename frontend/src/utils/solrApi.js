@@ -66,10 +66,11 @@ export const fetchPokemonById = async (id) => {
   }
 };
 
-export const fetchMoreLikeThis = async (id) => {
+export const fetchMoreLikeThis = async (id, ev_line_number) => {
+  let rows = 4 + ev_line_number;
   try {
     const response = await fetch(
-      `/api/mlt?q=id:${id}&mlt.fl=name,Description,type1,type2&mlt.qf=name^2 Description^1.5 type1^1 type2^1&mlt.mindf=1&mlt.mintf=1&rows=5`
+      `/api/mlt?q=id:${id}&mlt.fl=name,Description,type1,type2&mlt.qf=name^2 Description^1 type1^1.5 type2^1.5&mlt.mindf=1&mlt.mintf=1&rows=${rows}`
     );
 
     if (!response.ok) {
@@ -81,5 +82,23 @@ export const fetchMoreLikeThis = async (id) => {
   } catch (error) {
     console.error("Error fetching more like this:", error);
     return [];
+  }
+};
+
+export const fetchPokemonByName = async (name) => {
+  try {
+    const response = await fetch(`/api/select?q=name:"${name}"&wt=json&rows=1`);
+
+    if (!response.ok) {
+      throw new Error(`Error fetching Pokémon by name: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    const docs = data.response.docs;
+
+    return docs.length > 0 ? docs[0] : null;
+  } catch (error) {
+    console.error("Error fetching Pokémon by name:", error);
+    return null;
   }
 };

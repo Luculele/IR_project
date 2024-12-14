@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { fetchPokemonById, fetchMoreLikeThis } from "../utils/solrApi";
+import {
+  fetchPokemonById,
+  fetchMoreLikeThis,
+  fetchPokemonByName,
+} from "../utils/solrApi";
 
 const typeColors = {
   Grass: "bg-green-500 text-white",
@@ -29,14 +33,42 @@ const PokemonDetails = () => {
   const [pokemon, setPokemon] = useState(null);
   const [loading, setLoading] = useState(true);
   const [recommended, setRecommended] = useState([]);
+  const [evolutionDetails, setEvolutionDetails] = useState([]);
 
   useEffect(() => {
     const loadPokemon = async () => {
       try {
         const fetchedPokemon = await fetchPokemonById(id);
         setPokemon(fetchedPokemon);
-        const recommendedPokemons = await fetchMoreLikeThis(id);
-        setRecommended(recommendedPokemons);
+        let evolutionIds = [];
+        if (
+          fetchedPokemon.evolution_line &&
+          fetchedPokemon.evolution_line.length > 0
+        ) {
+          const evolutionPromises = fetchedPokemon.evolution_line.map((name) =>
+            fetchPokemonByName(name)
+          );
+          const evolutionData = await Promise.all(evolutionPromises);
+
+          console.log("evolution DAta", evolutionData);
+          const filteredEvolutionData = evolutionData.filter(
+            (pokemon) => pokemon && String(pokemon.form).trim() === "No form"
+          );
+
+          setEvolutionDetails(filteredEvolutionData);
+          console.log("settedEvolutionDetails", evolutionDetails);
+
+          evolutionIds = filteredEvolutionData.map((evo) => evo.id);
+        }
+
+        const recommendedPokemons = await fetchMoreLikeThis(
+          id,
+          evolutionIds.length - 1
+        );
+        const filteredRecommended = recommendedPokemons.filter(
+          (rec) => !evolutionIds.includes(rec.id)
+        );
+        setRecommended(filteredRecommended);
       } catch (error) {
         console.error("Error loading Pokémon details:", error);
         setPokemon(null);
@@ -120,14 +152,30 @@ const PokemonDetails = () => {
         </div>
         <div className="mt-4">
           <h3 className="text-lg font-semibold">Evolution Line:</h3>
-          <p className="text-gray-800">{pokemon.evolution_line.join(" → ")}</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
+            {evolutionDetails.map((evolution) => (
+              <div
+                key={evolution.id}
+                className="bg-gray-100 rounded-lg shadow p-4 flex flex-col items-center cursor-pointer hover:shadow-lg"
+                onClick={() => navigate(`/pokemon/${evolution.id}`)}
+              >
+                <img
+                  src={evolution.image}
+                  alt={evolution.name}
+                  className="w-20 h-20"
+                />
+                <p className="mt-2 font-bold">{evolution.name}</p>
+                <p className="text-gray-500 text-sm">#{evolution.number}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
       <div className="mt-8">
         <h3 className="text-lg font-semibold">More Like This:</h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
-          {recommended.map((rec) => (
+          {recommended.slice(0, 4).map((rec) => (
             <div
               key={rec.id}
               className="p-4 bg-white rounded shadow hover:shadow-lg cursor-pointer"
