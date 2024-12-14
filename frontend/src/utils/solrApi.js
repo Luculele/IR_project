@@ -69,7 +69,7 @@ export const fetchPokemonById = async (id) => {
 export const fetchMoreLikeThis = async (id) => {
   try {
     const response = await fetch(
-      `${SOLR_BASE_URL}/pokemon/mlt?q=id:${id}&mlt.fl=name,Description,type1,type2&mlt.qf=name^2 Description^1.5 type1^1 type2^1&mlt.mindf=1&mlt.mintf=1&rows=5`
+      `/api/mlt?q=id:${id}&mlt.fl=name,Description,type1,type2&mlt.qf=name^2 Description^1.5 type1^1 type2^1&mlt.mindf=1&mlt.mintf=1&rows=5`
     );
 
     if (!response.ok) {
