@@ -44,10 +44,10 @@ const SearchBar = ({ setResults, setLoading, filters }) => {
                 className={`w-[70px] h-[60px] bg-blue-500 text-white flex items-center justify-center border-none rounded-tr-full rounded-br-full transition-colors duration-300 hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed`}
                 aria-label="Search"
             >
-              <img src={glass} alt="Search icon" className="w-5" />
+              <img src={glass} alt="Search icon" className="w-5"/>
             </button>
           </div>
-          {error && <p className="text-red-500 mt-2">{error}</p>}
+          {/*{error && <p className="text-red-500 mt-2">{error}</p>}*/}
         </div>
       </div>
   );

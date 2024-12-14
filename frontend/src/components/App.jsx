@@ -38,15 +38,7 @@ const App = () => {
                 </Sidebar>
 
 
-                {/* Sidebar Toggle Button */}
-                <div className="p-4">
-                    <Button
-                        icon="pi pi-arrow-right"
-                        label="Filters"
-                        onClick={() => setSidebarVisible(true)}
-                        className="p-button-rounded p-button-secondary"
-                    />
-                </div>
+
 
                 {/* Title Section */}
                 <div className="w-full p-4">
@@ -60,6 +52,15 @@ const App = () => {
                         setLoading={setLoading}
                         filters={filters}
                     />
+                    {/* Sidebar Toggle Button */}
+                    <div className="p-4">
+                        <Button
+                            icon="pi pi-arrow-right"
+                            label="Filters"
+                            onClick={() => setSidebarVisible(true)}
+                            className="p-button-rounded p-button-secondary"
+                        />
+                    </div>
                 </div>
 
                 {/* Results Section */}
