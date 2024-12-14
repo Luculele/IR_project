@@ -22,7 +22,7 @@ const typeColors = {
   Normal: "bg-gray-200 text-black",
 };
 
-const Results = ({ results, loading }) => {
+const Results = ({ results, loading, sidebarVisible }) => {
   console.log("Results received by Results component:", results);
 
   if (loading) {
@@ -30,7 +30,7 @@ const Results = ({ results, loading }) => {
   }
 
   if (results.length === 0) {
-    return <p className="text-center mt-4 text-gray-600"></p>;
+    return <p className="text-center mt-4 text-gray-600">No results found</p>;
   }
 
   return (
@@ -38,11 +38,25 @@ const Results = ({ results, loading }) => {
           className="results-container p-4 rounded max-h-[600px] overflow-y-auto"
           style={{ scrollbarWidth: "thin", scrollbarColor: "#cbd5e1 #f1f5f9" }}
       >
-        {/*<h2 className="text-xl font-bold mb-4 text-center">Search Results</h2>*/}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {/* Conditionally adjust layout */}
+        <div
+            className={`grid gap-6 ${
+                sidebarVisible
+                    ? "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3"
+                    : "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+            }`}
+            style={{
+              marginLeft: sidebarVisible ? "50px" : "50px", // Shift everything left when sidebar is visible
+              paddingLeft: sidebarVisible ? "50px" : "50px", // Adjust padding if needed
+            }}
+        >
           {results.map((pokemon) => (
               <Link to={`/pokemon/${pokemon.id}`} key={pokemon.id}>
-                <div className="bg-white rounded-lg shadow-lg p-4 flex flex-col items-center hover:shadow-xl transition-shadow">
+                <div
+                    className={`bg-white rounded-lg shadow-lg p-4 flex flex-col items-center hover:shadow-xl transition-shadow ${
+                        sidebarVisible ? "w-48" : "w-64" // Adjust width of cards when sidebar is visible
+                    }`}
+                >
                   <img
                       src={pokemon.image}
                       alt={pokemon.name}

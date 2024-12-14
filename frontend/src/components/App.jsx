@@ -69,13 +69,14 @@ const App = () => {
                         <Routes>
                             <Route
                                 path="/"
-                                element={<Results results={results} loading={loading} />}
+                                element={<Results results={results} loading={loading} sidebarVisible={sidebarVisible} />}
                             />
                             <Route
                                 path="/pokemon/:id"
                                 element={<PokemonDetails data={results} />}
                             />
                         </Routes>
+
                     </div>
                 </div>
             </div>
