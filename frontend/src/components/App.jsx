@@ -27,24 +27,30 @@ const App = () => {
     <Router>
       <div className="flex flex-col min-h-screen bg-bulbasaur bg-cover bg-center bg-no-repeat">
         {/* Sidebar for Filters */}
-        <Sidebar
-          visible={sidebarVisible}
-          onHide={() => setSidebarVisible(false)}
-          position="right"
-          modal={false}
-          dismissable={false}
-        >
-          {/*<h2 className="text-xl font-bold mb-4">Filters</h2>*/}
-          <Filters onFilterChange={handleFiltersChange} />
-        </Sidebar>
+        <div className="transition-all duration-300">
+          <Sidebar
+            visible={sidebarVisible}
+            onHide={() => setSidebarVisible(false)}
+            position="right"
+            modal={false}
+            dismissable={false}
+          >
+            {/*<h2 className="text-xl font-bold mb-4">Filters</h2>*/}
+            <Filters onFilterChange={handleFiltersChange} />
+          </Sidebar>
+        </div>
 
-        {/* Sidebar Toggle Button */}
-        <div className="fixed top-1/2 right-0 transform -translate-y-1/2 p-4">
-          <Button
-            icon={sidebarVisible ? "pi pi-arrow-right" : "pi pi-arrow-left"}
-            onClick={() => setSidebarVisible(!sidebarVisible)}
-            className="p-button-rounded p-button-secondary"
-          />
+        <div
+          className={`fixed top-1/2 transform -translate-y-1/2 rotate-90 z-50 flex items-center justify-center bg-blue-500 text-white w-16 h-12 shadow-lg hover:bg-blue-600 transition-all duration-300 clip-path-trapezoid ${
+            sidebarVisible ? "right-[311px]" : "right-[-8px]"
+          }`}
+          onClick={() => setSidebarVisible(!sidebarVisible)}
+        >
+          <i
+            className={`pi ${
+              sidebarVisible ? "pi-arrow-up" : "pi-arrow-down"
+            } text-xl`}
+          ></i>
         </div>
 
         {/* Title Section */}
