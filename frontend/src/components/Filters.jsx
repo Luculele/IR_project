@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import { Dropdown } from "primereact/dropdown";
 import { Slider } from "primereact/slider";
 import "../index.css";
-// PrimeReact core styles
-import "primereact/resources/themes/saga-blue/theme.css"; // Theme (choose one)
-import "primereact/resources/primereact.min.css"; // Core CSS
+import "primereact/resources/themes/saga-blue/theme.css";
+import "primereact/resources/primereact.min.css";
 
 const Filters = ({ onFilterChange }) => {
   const [filters, setFilters] = useState({
@@ -19,7 +18,6 @@ const Filters = ({ onFilterChange }) => {
     type2: "",
   });
 
-  // Pokémon types with colors
   const typeColors = {
     Any: "bg-gray-200 text-black",
     Grass: "bg-green-500 text-white",
@@ -53,17 +51,13 @@ const Filters = ({ onFilterChange }) => {
   };
 
   const handleSliderChange = (key, value) => {
-    const { min, max } = attributeRanges[key];
-    const clampedMin = Math.max(min, Math.min(value[0], max));
-    const clampedMax = Math.min(max, Math.max(value[1], min));
     const updatedFilters = {
       ...filters,
       [key]: [
-        Math.min(clampedMin, clampedMax),
-        Math.max(clampedMin, clampedMax),
+        Math.max(attributeRanges[key].min, Math.min(value[0], filters[key][1])),
+        Math.min(attributeRanges[key].max, Math.max(value[1], filters[key][0])),
       ],
     };
-
     setFilters(updatedFilters);
     if (onFilterChange) onFilterChange(updatedFilters);
   };
@@ -77,138 +71,105 @@ const Filters = ({ onFilterChange }) => {
     if (onFilterChange) onFilterChange(updatedFilters);
   };
 
-  const getTypeLabel = (key) => {
-    return filters[key] === "" ? "Any" : filters[key];
-  };
-
-  const typeOptionTemplate = (option) => {
-    return (
-      <div className={`flex align-items-center p-2 ${typeColors[option]}`}>
-        <div>{option}</div>
-      </div>
-    );
-  };
-
-  const selectedTypeTemplate = (option, props) => {
-    return option ? (
-      <div className={`flex align-items-center p-2 ${typeColors[option]}`}>
-        <div>{option}</div>
-      </div>
-    ) : (
-      <span>{props.placeholder}</span>
-    );
-  };
-
   return (
-    <div className="fixed top-53 right-9 h-full w-64 p-4 overflow-y-auto">
-      <h2 className="text-xl font-bold mb-4">Filters</h2>
+      <div className="fixed top-53 right-9 h-full w-64 p-4 overflow-y-auto">
+        <h2 className="text-xl font-bold mb-4">Filters</h2>
 
-      {/* Numeric Filters with Sliders */}
-      {Object.entries(filters)
-        .filter(([key, value]) => Array.isArray(value))
-        .map(([key, range]) => (
-          <div key={key} className="mb-6">
-            <label htmlFor={key} className="block font-medium mb-1 capitalize">
-              {key.replace("_", " ")}:
-            </label>
-            <div className="mb-2 flex justify-between text-sm text-gray-700 items-center">
-              <input
-                type="number"
-                defaultValue={range[0]}
-                min={attributeRanges[key].min}
-                max={filters[key][1]}
-                value={filters[key][0]}
-                onBlur={(e) => {
-                  const newMin = Number(e.target.value);
+        {Object.entries(filters)
+            .filter(([key, value]) => Array.isArray(value))
+            .map(([key, range]) => (
+                <div key={key} className="mb-6">
+                  <label htmlFor={key} className="block font-medium mb-1 capitalize">
+                    {key.replace("_", " ")}:
+                  </label>
+                  <div className="mb-2 flex justify-between text-sm text-gray-700 items-center">
+                    <input
+                        type="number"
+                        min={attributeRanges[key].min}
+                        max={filters[key][1]}
+                        value={filters[key][0]}
+                        onBlur={(e) => {
+                          const newMin = Number(e.target.value);
+                          const clampedMin = Math.max(
+                              attributeRanges[key].min,
+                              Math.min(newMin, filters[key][1])
+                          );
+                          handleSliderChange(key, [clampedMin, filters[key][1]]);
+                        }}
+                        onChange={(e) => {
+                          const newMin = Number(e.target.value);
+                          const updatedFilters = { ...filters };
+                          updatedFilters[key][0] = newMin;
+                          setFilters(updatedFilters);
+                        }}
+                        className="w-16 text-center border border-gray-300 rounded-md"
+                    />
+                    <span className="mx-2">to</span>
+                    <input
+                        type="number"
+                        min={filters[key][0]}
+                        max={attributeRanges[key].max}
+                        value={filters[key][1]}
+                        onBlur={(e) => {
+                          const newMax = Number(e.target.value);
+                          const clampedMax = Math.min(
+                              attributeRanges[key].max,
+                              Math.max(newMax, filters[key][0])
+                          );
+                          handleSliderChange(key, [filters[key][0], clampedMax]);
+                        }}
+                        onChange={(e) => {
+                          const newMax = Number(e.target.value);
+                          const updatedFilters = { ...filters };
+                          updatedFilters[key][1] = newMax;
+                          setFilters(updatedFilters);
+                        }}
+                        className="w-16 text-center border border-gray-300 rounded-md"
+                    />
+                  </div>
+                  <Slider
+                      value={filters[key]}
+                      onChange={(e) => {
+                        handleSliderChange(key, e.value);
+                      }}
+                      className="w-full"
+                      range
+                      min={attributeRanges[key].min}
+                      max={attributeRanges[key].max}
+                  />
+                </div>
+            ))}
 
-                  const clampedMin = Math.max(
-                    attributeRanges[key].min,
-                    Math.min(newMin, filters[key][1])
-                  );
-                  handleSliderChange(key, [clampedMin, filters[key][1]]);
-                  e.target.value = clampedMin;
-                }}
-                onChange={(e) => {
-                  let newFilters = { ...filters };
-                  newFilters[key][0] = e.target.value;
-                  setFilters(newFilters);
-                }}
-                className="w-16 text-center border border-gray-300 rounded-md"
-              />
-              <span className="mx-2">to</span>
-              <input
-                type="number"
-                defaultValue={range[1]}
-                min={filters[key][0]}
-                max={attributeRanges[key].max}
-                value={filters[key][1]}
-                onBlur={(e) => {
-                  const newMax = Number(e.target.value);
-
-                  const clampedMax = Math.min(
-                    attributeRanges[key].max,
-                    Math.max(newMax, filters[key][0])
-                  );
-                  handleSliderChange(key, [filters[key][0], clampedMax]);
-                  e.target.value = clampedMax;
-                }}
-                onChange={(e) => {
-                  let newFilters = { ...filters };
-                  newFilters[key][1] = e.target.value;
-                  setFilters(newFilters);
-                }}
-                className="w-16 text-center border border-gray-300 rounded-md"
-              />
-            </div>
-            <Slider
-              value={filters[key]}
-              onChange={(e) => {
-                handleSliderChange(key, e.value);
-              }}
+        <div className="mb-6">
+          <label htmlFor="type1" className="block font-medium mb-1">
+            Type 1:
+          </label>
+          <Dropdown
+              id="type1"
+              value={filters.type1}
+              onChange={(e) => handleTypeChange("type1", e.value)}
+              options={[...Object.keys(typeColors)]}
+              optionLabel="name"
+              placeholder="Select Type 1"
               className="w-full"
-              range
-              min={attributeRanges[key].min}
-              max={attributeRanges[key].max}
-            />
-          </div>
-        ))}
+          />
+        </div>
 
-      {/* Dropdown for Type 1 */}
-      <div className="mb-6">
-        <label htmlFor="type1" className="block font-medium mb-1">
-          Type 1:
-        </label>
-        <Dropdown
-          id="type1"
-          value={filters.type1}
-          onChange={(e) => handleTypeChange("type1", e.value)}
-          options={[...Object.keys(typeColors)]}
-          optionLabel="name"
-          placeholder="Select Type 1"
-          valueTemplate={selectedTypeTemplate}
-          itemTemplate={typeOptionTemplate}
-          className="w-full"
-        />
+        <div className="mb-6">
+          <label htmlFor="type2" className="block font-medium mb-1">
+            Type 2:
+          </label>
+          <Dropdown
+              id="type2"
+              value={filters.type2}
+              onChange={(e) => handleTypeChange("type2", e.value)}
+              options={[...Object.keys(typeColors)]}
+              optionLabel="name"
+              placeholder="Select Type 2"
+              className="w-full"
+          />
+        </div>
       </div>
-
-      {/* Dropdown for Type 2 */}
-      <div className="mb-6">
-        <label htmlFor="type2" className="block font-medium mb-1">
-          Type 2:
-        </label>
-        <Dropdown
-          id="type2"
-          value={filters.type2}
-          onChange={(e) => handleTypeChange("type2", e.value)}
-          options={[...Object.keys(typeColors)]}
-          optionLabel="name"
-          placeholder="Select Type 2"
-          valueTemplate={selectedTypeTemplate}
-          itemTemplate={typeOptionTemplate}
-          className="w-full"
-        />
-      </div>
-    </div>
   );
 };
 
