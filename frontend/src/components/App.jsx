@@ -12,6 +12,7 @@ import "../index.css";
 import "primereact/resources/themes/saga-blue/theme.css"; // PrimeReact Theme
 import "primereact/resources/primereact.min.css"; // Core CSS
 import "primeicons/primeicons.css";
+import NotFound from "./NotFound";
 
 const App = () => {
   const [results, setResults] = useState([]);
@@ -113,16 +114,20 @@ const App = () => {
           }}
         >
           <Routes>
-            <Route
-              path="/"
-              element={
-                <Results
-                  results={results}
-                  loading={loading}
-                  sidebarVisible={sidebarVisible}
-                />
-              }
-            />
+            {results.length === 0 ? (
+              <Route path="/" element={<NotFound />} />
+            ) : (
+              <Route
+                path="/"
+                element={
+                  <Results
+                    results={results}
+                    loading={loading}
+                    sidebarVisible={sidebarVisible}
+                  />
+                }
+              />
+            )}
             <Route
               path="/pokemon/:id"
               element={<PokemonDetails data={results} />}
