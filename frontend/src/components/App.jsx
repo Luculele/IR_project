@@ -77,7 +77,6 @@ const App = () => {
         <div className="w-full p-4">
           <Logo />
         </div>
-
         {/* Search Bar */}
         <div className="w-full p-4">
           <SearchBar

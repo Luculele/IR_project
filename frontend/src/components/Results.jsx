@@ -38,7 +38,7 @@ const Results = ({ results, loading, sidebarVisible }) => {
       className="results-container p-4 rounded max-h-[600px] overflow-y-auto no-scrollbar"
       style={{ scrollbarWidth: "thin", scrollbarColor: "#cbd5e1 #f1f5f9" }}
     >
-      {/* Conditionally adjust layout */}
+      {/* Conditionally adjust layout  */}
       <div
         className={`grid gap-10 transition-all duration-300${
           sidebarVisible
