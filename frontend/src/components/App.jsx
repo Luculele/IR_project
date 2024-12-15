@@ -40,7 +40,7 @@ const App = () => {
     <Router>
       <div className="flex flex-col min-h-screen bg-bulbasaur bg-cover bg-center bg-no-repeat">
         {/* Sidebar for Filters */}
-        <div className="transition-all duration-300">
+        <div className=" sidebar transition-all duration-300">
           <Sidebar
             visible={sidebarVisible}
             onHide={() => setSidebarVisible(false)}
@@ -51,6 +51,7 @@ const App = () => {
               backgroundColor: "rgba(236, 236, 236, 0.85)",
               borderRadius: "16px",
               boxShadow: "0 4px 10px rgba(0, 0, 0, 0.5)",
+              height: "91%",
             }}
           >
             {/*<h2 className="text-xl font-bold mb-4">Filters</h2>*/}

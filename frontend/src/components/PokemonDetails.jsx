@@ -97,7 +97,7 @@ const PokemonDetails = () => {
   }
 
   return (
-    <div className="rounded-3xl mx-8 my-5 w-[1000px] flex-grow bg-[rgba(236,236,236,0.95)] overflow-y-auto p-6 shadow-lg custom-scrollbar">
+    <div className="rounded-3xl mx-8 my-5 max-h-[670px] w-[1000px] flex-grow bg-[rgba(236,236,236,0.95)] overflow-y-auto p-6 shadow-lg custom-scrollbar">
       {/* Top Section */}
       <div className="flex justify-between items-start mb-8">
         {/* Pokémon Image */}
@@ -244,7 +244,7 @@ const PokemonDetails = () => {
           {recommended.slice(0, 4).map((rec) => (
             <div
               key={rec.id}
-              className="bg-white p-4 w-[200px] p-7 rounded-lg shadow hover:shadow-lg cursor-pointer flex flex-col items-center"
+              className="bg-white  w-[200px] p-7 rounded-lg shadow hover:shadow-lg cursor-pointer flex flex-col items-center"
               onClick={() => navigate(`/pokemon/${rec.id}`)}
             >
               <img

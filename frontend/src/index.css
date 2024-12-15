@@ -30,15 +30,18 @@
   box-shadow: 0 0 4px rgba(0, 119, 204, 0.7) !important;
 }
 
+.sidebar {
+  height: 100% !important;
+}
+
 .sidebar-visible .pokemon-card {
-  width: 16rem; /* w-64 */
+  width: 16rem;
 }
 
 .sidebar-hidden .pokemon-card {
-  width: 13.5rem; /* w-54 */
+  width: 13.5rem;
 }
 
-/* Stili di default */
 .pokemon-card {
   transition: width 0.3s ease-in-out;
 }
@@ -66,23 +69,20 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar {
-  width: 12px; /* Larghezza della barra di scorrimento */
+  width: 12px;
 }
 
-/* Colore e stile dello sfondo della barra */
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent; /* Colore dello sfondo */
+  background: transparent;
   border-radius: 10px;
 }
 
-/* Colore e stile della barra di scorrimento */
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #888; /* Colore della barra */
+  background: #888;
   border-radius: 10px;
-  border: 3px solid #f1f1f1; /* Padding */
+  border: 3px solid #f1f1f1;
 }
 
-/* Cambia colore al hover */
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #555;
 }

@@ -38,8 +38,8 @@ const SearchBar = ({ query, setQuery, setResults, setLoading, filters }) => {
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyPress}
             placeholder="Please enter your query"
-            className="px-5 py-3 text-lg outline-none border-none flex-grow h-[60px] text-center"
-            style={{ fontSize: "1.2rem", lineHeight: "1.5rem" }}
+            className="px-5 py-3 text-2xl outline-none border-none flex-grow h-[60px] text-center"
+            style={{ fontSize: "1.5rem", lineHeight: "1.5rem" }}
             aria-label="Search query input"
           />
           <Link
