@@ -29,3 +29,38 @@
   background-color: #0077cc !important;
   box-shadow: 0 0 4px rgba(0, 119, 204, 0.7) !important;
 }
+
+.sidebar-visible .pokemon-card {
+  width: 16rem; /* w-64 */
+}
+
+.sidebar-hidden .pokemon-card {
+  width: 13.5rem; /* w-54 */
+}
+
+/* Stili di default */
+.pokemon-card {
+  transition: width 0.3s ease-in-out;
+}
+
+.pokemon-card:hover {
+  /* background-color: transparent !important; */
+  /* box-shadow: none !important; */
+  transform: scale(1.05);
+}
+
+.pokemon-inner-card {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  transition: transform 0.3s ease-in-out;
+}
+
+.no-scrollbar {
+  overflow-y: scroll;
+  scrollbar-width: none !important;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}

@@ -89,11 +89,17 @@ const App = () => {
 
         {/* Results Section */}
         <div className="flex flex-grow">
-          <div className="w-full p-6">
+          <div className={`w-full p-6 ${sidebarVisible ? "mr-[320px]" : ""}`}>
             <Routes>
               <Route
                 path="/"
-                element={<Results results={results} loading={loading} sidebarVisible={sidebarVisible}/>}
+                element={
+                  <Results
+                    results={results}
+                    loading={loading}
+                    sidebarVisible={sidebarVisible}
+                  />
+                }
               />
               <Route
                 path="/pokemon/:id"

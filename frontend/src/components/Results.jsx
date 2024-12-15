@@ -34,71 +34,72 @@ const Results = ({ results, loading, sidebarVisible }) => {
   }
 
   return (
+    <div
+      className="results-container p-4 rounded max-h-[600px] overflow-y-auto no-scrollbar"
+      style={{ scrollbarWidth: "thin", scrollbarColor: "#cbd5e1 #f1f5f9" }}
+    >
+      {/* Conditionally adjust layout */}
       <div
-          className="results-container p-4 rounded max-h-[600px] overflow-y-auto"
-          style={{ scrollbarWidth: "thin", scrollbarColor: "#cbd5e1 #f1f5f9" }}
+        className={`grid gap-10 transition-all duration-300${
+          sidebarVisible
+            ? "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+            : "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5"
+        }`}
+        style={{
+          marginLeft: sidebarVisible ? "0px" : "0px",
+          paddingLeft: sidebarVisible ? "0px" : "0px",
+          paddingRight: sidebarVisible ? "20px" : "20px",
+        }}
       >
-        {/* Conditionally adjust layout */}
-        <div
-            className={`grid gap-10 ${
-                sidebarVisible
-                    ? "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
-                    : "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5"
-            }`}
-            style={{
-              marginLeft: sidebarVisible ? "0px" : "0px", // Shift everything left when sidebar is visible
-              paddingLeft: sidebarVisible ? "0px" : "0px", // Adjust padding if needed
-              paddingRight: sidebarVisible ? "120px" : "20px",
-            }}
-        >
-          {results.map((pokemon) => (
-              <Link to={`/pokemon/${pokemon.id}`} key={pokemon.id}>
-                <div
-                    className={`bg-white rounded-lg shadow-lg p-2 flex flex-col items-center hover:shadow-xl transition-shadow ${
-                        sidebarVisible ? "w-44" : "w-54" // Adjust width of cards when sidebar is visible
-                    }`}
-                >
-                  <img
-                      src={pokemon.image}
-                      alt={pokemon.name}
-                      className="w-24 h-24 object-contain mb-4"
-                  />
-                  <h3 className="text-lg font-semibold text-gray-800 text-center">
-                    {pokemon.name}
-                  </h3>
-                  {pokemon.form && String(pokemon.form).trim() !== "No form" ? (
-                      <h3 className="text-lg font-semibold text-gray-500 text-center">
-                        {pokemon.form}
-                      </h3>
-                  ) : (
-                      <div className="h-6"></div>
-                  )}
-                  <p className="text-sm text-gray-600 mt-2 text-center h-7">
-                    #{pokemon.number}
-                  </p>
-                  <div className="flex space-x-2 mt-2">
+        {results.map((pokemon) => (
+          <Link
+            className="pokemon-card bg-white rounded-lg shadow-lg p-4 hover:shadow-xl transition transform hover:scale-105 "
+            to={`/pokemon/${pokemon.id}`}
+            key={pokemon.id}
+          >
+            <div className="pokemon-inner-card bg-white rounded-lg shadow-lg p-2 flex flex-col items-center hover:shadow-xl transition-shadow">
+              <img
+                src={pokemon.image}
+                alt={pokemon.name}
+                className="w-24 h-24 object-contain mb-4"
+              />
+              <h3 className="text-lg font-semibold text-gray-800 text-center">
+                {pokemon.name}
+              </h3>
+              {pokemon.form && String(pokemon.form).trim() !== "No form" ? (
+                <h3 className="text-lg font-semibold text-gray-500 text-center">
+                  {pokemon.form}
+                </h3>
+              ) : (
+                <div className="h-6"></div>
+              )}
+              <p className="text-sm text-gray-600 mt-2 text-center h-7">
+                #{pokemon.number}
+              </p>
+              <div className="flex space-x-2 mt-2">
                 <span
-                    className={`px-3 py-1 text-xs font-bold rounded-full ${
-                        typeColors[pokemon.type1] || "bg-gray-300 text-black"
-                    }`}
+                  className={`px-3 py-1 text-xs font-bold rounded-full ${
+                    typeColors[pokemon.type1] || "bg-gray-300 text-black"
+                  }`}
                 >
                   {pokemon.type1}
                 </span>
-                    {pokemon.type2 && String(pokemon.type2).trim() !== "No type" && (
-                        <span
-                            className={`px-3 py-1 text-xs font-bold rounded-full ${
-                                typeColors[pokemon.type2]
-                            }`}
-                        >
-                    {pokemon.type2}
-                  </span>
-                    )}
-                  </div>
-                </div>
-              </Link>
-          ))}
-        </div>
+                {pokemon.type2 &&
+                  String(pokemon.type2).trim() !== "No type" && (
+                    <span
+                      className={`px-3 py-1 text-xs font-bold rounded-full ${
+                        typeColors[pokemon.type2]
+                      }`}
+                    >
+                      {pokemon.type2}
+                    </span>
+                  )}
+              </div>
+            </div>
+          </Link>
+        ))}
       </div>
+    </div>
   );
 };
 
