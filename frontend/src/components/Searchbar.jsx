@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import { searchPokemon } from "../utils/solrApi";
 import "../index.css";
 import glass from "../img/magnifying_search_searching.png";
-const SearchBar = ({ setResults, setLoading, filters }) => {
-  const [query, setQuery] = useState("");
-
+const SearchBar = ({ query, setQuery, setResults, setLoading, filters }) => {
   const handleSearch = async () => {
     // if (!query.trim()) return;
     // setLoading(true);

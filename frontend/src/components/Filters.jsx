@@ -6,7 +6,13 @@ import "../index.css";
 import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.min.css";
 
-const Filters = ({ filters, onFilterChange, setResults, setLoading }) => {
+const Filters = ({
+  filters,
+  query,
+  onFilterChange,
+  setResults,
+  setLoading,
+}) => {
   const defaultFilters = {
     total: [175, 1125],
     hp: [1, 255],
@@ -55,7 +61,7 @@ const Filters = ({ filters, onFilterChange, setResults, setLoading }) => {
   const handleSearch = async () => {
     setLoading(true);
     try {
-      const data = await searchPokemon("", filters);
+      const data = await searchPokemon(query, filters);
       console.log("Data from API:", data);
       setResults(data);
     } catch (error) {

@@ -35,25 +35,14 @@ const Results = ({ results, loading, sidebarVisible }) => {
 
   return (
     <div
-      className="results-container p-4 rounded max-h-[600px] overflow-y-auto no-scrollbar"
+      className="results-container p-8 rounded max-h-[670px] w-full overflow-y-auto my-10"
       style={{ scrollbarWidth: "thin", scrollbarColor: "#cbd5e1 #f1f5f9" }}
     >
-      {/* Conditionally adjust layout  */}
-      <div
-        className={`grid gap-10 transition-all duration-300${
-          sidebarVisible
-            ? "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
-            : "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5"
-        }`}
-        style={{
-          marginLeft: sidebarVisible ? "0px" : "0px",
-          paddingLeft: sidebarVisible ? "0px" : "0px",
-          paddingRight: sidebarVisible ? "20px" : "20px",
-        }}
-      >
+      {/* Layout with Flexbox */}
+      <div className="flex flex-wrap justify-evenly gap-6 transition-all duration-300 ">
         {results.map((pokemon) => (
           <Link
-            className="pokemon-card bg-white rounded-lg shadow-lg p-4 hover:shadow-xl transition transform hover:scale-105 "
+            className="w-[300px] h-[300px] bg-white rounded-lg shadow-xl p-4 hover:shadow-xl transition transform hover:scale-105 flex flex-col items-center justify-center"
             to={`/pokemon/${pokemon.id}`}
             key={pokemon.id}
           >
@@ -61,7 +50,7 @@ const Results = ({ results, loading, sidebarVisible }) => {
               <img
                 src={pokemon.image}
                 alt={pokemon.name}
-                className="w-24 h-24 object-contain mb-4"
+                className="w-24 h-24 object-contain mb-2"
               />
               <h3 className="text-lg font-semibold text-gray-800 text-center">
                 {pokemon.name}

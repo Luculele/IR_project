@@ -27,6 +27,8 @@ const App = () => {
     type2: "",
   });
   const [sidebarVisible, setSidebarVisible] = useState(false);
+  const [isResultsVisible, setIsResultsVisible] = useState(false);
+  const [query, setQuery] = useState("");
 
   const handleFiltersChange = (updatedFilters) => {
     setFilters(updatedFilters);
@@ -53,8 +55,14 @@ const App = () => {
             {/*<h2 className="text-xl font-bold mb-4">Filters</h2>*/}
             <Filters
               filters={filters}
+              query={query}
               onFilterChange={handleFiltersChange}
-              setResults={setResults}
+              setResults={(newResults) => {
+                setResults(newResults);
+                if (newResults.length > 0) {
+                  setIsResultsVisible(true);
+                }
+              }}
               setLoading={setLoading}
             />
           </Sidebar>
@@ -80,32 +88,44 @@ const App = () => {
         {/* Search Bar */}
         <div className="w-full p-4">
           <SearchBar
-            setResults={setResults}
+            query={query}
+            setQuery={setQuery}
+            setResults={(newResults) => {
+              setResults(newResults);
+              if (newResults.length > 0) {
+                setIsResultsVisible(true);
+              }
+            }}
             setLoading={setLoading}
             filters={filters}
           />
         </div>
 
         {/* Results Section */}
-        <div className="flex flex-grow">
-          <div className={`w-full p-6 ${sidebarVisible ? "mr-[320px]" : ""}`}>
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <Results
-                    results={results}
-                    loading={loading}
-                    sidebarVisible={sidebarVisible}
-                  />
-                }
-              />
-              <Route
-                path="/pokemon/:id"
-                element={<PokemonDetails data={results} />}
-              />
-            </Routes>
-          </div>
+        <div
+          className={` rounded-3xl mx-48 max-h-[770px] transition-all duration-300 my-5${
+            isResultsVisible ? "flex" : "hidden"
+          } flex-grow bg-white ${sidebarVisible ? "mr-[340px]" : ""}`}
+          style={{
+            backgroundColor: "rgba(236, 236, 236, 0.95)",
+          }}
+        >
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Results
+                  results={results}
+                  loading={loading}
+                  sidebarVisible={sidebarVisible}
+                />
+              }
+            />
+            <Route
+              path="/pokemon/:id"
+              element={<PokemonDetails data={results} />}
+            />
+          </Routes>
         </div>
       </div>
     </Router>
