@@ -6,3 +6,26 @@
 .clip-path-trapezoid {
   clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);
 }
+
+.p-sidebar-close.p-sidebar-icon.p-link {
+  display: none !important;
+}
+
+.p-sidebar-content {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  height: 100%;
+}
+
+.custom-slider .p-slider-handle {
+  background-color: #ffffff !important;
+  border: 2px solid #0077cc !important;
+  box-shadow: 0 0 0px rgba(0, 119, 204, 0.5) !important;
+}
+
+.custom-slider .p-slider-handle:active {
+  background-color: #0077cc !important;
+  box-shadow: 0 0 4px rgba(0, 119, 204, 0.7) !important;
+}

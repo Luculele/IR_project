@@ -15,7 +15,17 @@ import "primeicons/primeicons.css";
 const App = () => {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [filters, setFilters] = useState({});
+  const [filters, setFilters] = useState({
+    total: [175, 1125],
+    hp: [1, 255],
+    attack: [5, 190],
+    defense: [5, 250],
+    sp_atk: [10, 194],
+    sp_def: [20, 255],
+    speed: [5, 200],
+    type1: "",
+    type2: "",
+  });
   const [sidebarVisible, setSidebarVisible] = useState(false);
 
   const handleFiltersChange = (updatedFilters) => {
@@ -34,9 +44,19 @@ const App = () => {
             position="right"
             modal={false}
             dismissable={false}
+            style={{
+              backgroundColor: "rgba(236, 236, 236, 0.85)",
+              borderRadius: "16px",
+              boxShadow: "0 4px 10px rgba(0, 0, 0, 0.5)",
+            }}
           >
             {/*<h2 className="text-xl font-bold mb-4">Filters</h2>*/}
-            <Filters onFilterChange={handleFiltersChange} />
+            <Filters
+              filters={filters}
+              onFilterChange={handleFiltersChange}
+              setResults={setResults}
+              setLoading={setLoading}
+            />
           </Sidebar>
         </div>
 

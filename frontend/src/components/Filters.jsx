@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { Dropdown } from "primereact/dropdown";
 import { Slider } from "primereact/slider";
+import { searchPokemon } from "../utils/solrApi";
 import "../index.css";
 import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.min.css";
 
-const Filters = ({ onFilterChange }) => {
-  const [filters, setFilters] = useState({
+const Filters = ({ filters, onFilterChange, setResults, setLoading }) => {
+  const defaultFilters = {
     total: [175, 1125],
     hp: [1, 255],
     attack: [5, 190],
@@ -16,7 +17,53 @@ const Filters = ({ onFilterChange }) => {
     speed: [5, 200],
     type1: "",
     type2: "",
-  });
+  };
+
+  const attributeRanges = {
+    total: { min: 175, max: 1125 },
+    hp: { min: 1, max: 255 },
+    attack: { min: 5, max: 190 },
+    defense: { min: 5, max: 250 },
+    sp_atk: { min: 10, max: 194 },
+    sp_def: { min: 20, max: 255 },
+    speed: { min: 5, max: 200 },
+  };
+
+  const handleSliderChange = (key, value) => {
+    const updatedFilters = {
+      ...filters,
+      [key]: [
+        Math.max(attributeRanges[key].min, Math.min(value[0], filters[key][1])),
+        Math.min(attributeRanges[key].max, Math.max(value[1], filters[key][0])),
+      ],
+    };
+    if (onFilterChange) onFilterChange(updatedFilters);
+  };
+
+  const handleTypeChange = (key, value) => {
+    const updatedFilters = {
+      ...filters,
+      [key]: value === "Any" ? "" : value,
+    };
+    if (onFilterChange) onFilterChange(updatedFilters);
+  };
+
+  const handleReonFilterChange = () => {
+    if (onFilterChange) onFilterChange(defaultFilters);
+  };
+
+  const handleSearch = async () => {
+    setLoading(true);
+    try {
+      const data = await searchPokemon("", filters);
+      console.log("Data from API:", data);
+      setResults(data);
+    } catch (error) {
+      console.error("Error during search:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const typeColors = {
     Any: "bg-gray-200 text-black",
@@ -40,40 +87,51 @@ const Filters = ({ onFilterChange }) => {
     Normal: "bg-gray-200 text-black",
   };
 
-  const attributeRanges = {
-    total: { min: 175, max: 1125 },
-    hp: { min: 1, max: 255 },
-    attack: { min: 5, max: 190 },
-    defense: { min: 5, max: 250 },
-    sp_atk: { min: 10, max: 194 },
-    sp_def: { min: 20, max: 255 },
-    speed: { min: 5, max: 200 },
+  const typeColorsHex = {
+    Grass: "rgba(34, 139, 34, 0.4)",
+    Poison: "rgba(128, 0, 128, 0.4)",
+    Fire: "rgba(255, 69, 0, 0.4)",
+    Water: "rgba(30, 144, 255, 0.4)",
+    Electric: "rgba(255, 215, 0, 0.4)",
+    Flying: "rgba(135, 206, 235, 0.4)",
+    Bug: "rgba(34, 139, 34, 0.4)",
+    Psychic: "rgba(255, 20, 147, 0.4)",
+    Rock: "rgba(139, 69, 19, 0.4)",
+    Ground: "rgba(210, 180, 140, 0.4)",
+    Ice: "rgba(173, 216, 230, 0.4)",
+    Dragon: "rgba(255, 140, 0, 0.4)",
+    Dark: "rgba(47, 79, 79, 0.4)",
+    Fairy: "rgba(255, 192, 203, 0.4)",
+    Steel: "rgba(192, 192, 192, 0.4)",
+    Fighting: "rgba(178, 34, 34, 0.4)",
+    Ghost: "rgba(75, 0, 130, 0.4)",
+    Normal: "rgba(169, 169, 169, 0.4)",
   };
 
-  const handleSliderChange = (key, value) => {
-    const updatedFilters = {
-      ...filters,
-      [key]: [
-        Math.max(attributeRanges[key].min, Math.min(value[0], filters[key][1])),
-        Math.min(attributeRanges[key].max, Math.max(value[1], filters[key][0])),
-      ],
-    };
-    setFilters(updatedFilters);
-    if (onFilterChange) onFilterChange(updatedFilters);
-  };
-
-  const handleTypeChange = (key, value) => {
-    const updatedFilters = {
-      ...filters,
-      [key]: value === "Any" ? "" : value,
-    };
-    setFilters(updatedFilters);
-    if (onFilterChange) onFilterChange(updatedFilters);
+  const typeColorsRGB = {
+    Grass: "34, 139, 34",
+    Poison: "128, 0, 128",
+    Fire: "255, 69, 0",
+    Water: "30, 144, 255",
+    Electric: "255, 215, 0",
+    Flying: "135, 206, 235",
+    Bug: "34, 139, 34",
+    Psychic: "255, 20, 147",
+    Rock: "139, 69, 19",
+    Ground: "210, 180, 140",
+    Ice: "173, 216, 230",
+    Dragon: "255, 140, 0",
+    Dark: "47, 79, 79",
+    Fairy: "255, 192, 203",
+    Steel: "192, 192, 192",
+    Fighting: "178, 34, 34",
+    Ghost: "75, 0, 130",
+    Normal: "169, 169, 169",
   };
 
   return (
-    <div className="fixed top-53 right-9 h-full w-64 p-4 overflow-y-auto">
-      <h2 className="text-xl font-bold mb-4">Filters</h2>
+    <div className="fixed top-53 right-9 h-100 w-64 p-4 overflow-y-auto bg-white  shadow-2xl rounded-xl">
+      <h2 className="text-xl font-bold mb-4 place-self-center">Filters</h2>
 
       {Object.entries(filters)
         .filter(([key, value]) => Array.isArray(value))
@@ -100,9 +158,10 @@ const Filters = ({ onFilterChange }) => {
                   const newMin = Number(e.target.value);
                   const updatedFilters = { ...filters };
                   updatedFilters[key][0] = newMin;
-                  setFilters(updatedFilters);
+                  onFilterChange(updatedFilters);
                 }}
-                className="w-16 text-center border border-gray-300 rounded-md"
+                className="w-16 text-center border border-green-400 focus:ring-2 focus:ring-green-300 rounded-lg bg-green-50 text-gray-700 placeholder-gray-400 shadow-md transition duration-200 ease-in-out"
+                placeholder="Min"
               />
               <span className="mx-2">to</span>
               <input
@@ -122,9 +181,10 @@ const Filters = ({ onFilterChange }) => {
                   const newMax = Number(e.target.value);
                   const updatedFilters = { ...filters };
                   updatedFilters[key][1] = newMax;
-                  setFilters(updatedFilters);
+                  onFilterChange(updatedFilters);
                 }}
-                className="w-16 text-center border border-gray-300 rounded-md"
+                className="w-16 text-center border border-blue-400 focus:ring-2 focus:ring-blue-300 rounded-lg bg-blue-50 text-gray-700 placeholder-gray-400 shadow-md transition duration-200 ease-in-out"
+                placeholder="Max"
               />
             </div>
             <Slider
@@ -132,7 +192,7 @@ const Filters = ({ onFilterChange }) => {
               onChange={(e) => {
                 handleSliderChange(key, e.value);
               }}
-              className="w-full"
+              className="w-full custom-slider"
               range
               min={attributeRanges[key].min}
               max={attributeRanges[key].max}
@@ -141,33 +201,68 @@ const Filters = ({ onFilterChange }) => {
         ))}
 
       <div className="mb-6">
-        <label htmlFor="type1" className="block font-medium mb-1">
+        <label htmlFor="type1" className="block font-medium mb-1 text-gray-700">
           Type 1:
         </label>
         <Dropdown
           id="type1"
           value={filters.type1}
           onChange={(e) => handleTypeChange("type1", e.value)}
-          options={[...Object.keys(typeColors)]}
+          options={Object.keys(typeColors)}
           optionLabel="name"
           placeholder="Select Type 1"
-          className="w-full"
+          className="w-full border rounded-lg shadow-md text-white transition duration-200 ease-in-out "
+          style={{
+            backgroundColor: filters.type1
+              ? typeColorsHex[filters.type1]
+              : "rgba(200, 200, 200, 0.8)",
+            border: `2px solid rgba(${
+              filters.type1 && filters.type1 !== "Any"
+                ? typeColorsRGB[filters.type1]
+                : "200, 200, 200"
+            }, 1)`,
+          }}
         />
       </div>
 
       <div className="mb-6">
-        <label htmlFor="type2" className="block font-medium mb-1">
+        <label htmlFor="type2" className="block font-medium mb-1 text-gray-700">
           Type 2:
         </label>
         <Dropdown
           id="type2"
           value={filters.type2}
           onChange={(e) => handleTypeChange("type2", e.value)}
-          options={[...Object.keys(typeColors)]}
+          options={Object.keys(typeColors)}
           optionLabel="name"
           placeholder="Select Type 2"
-          className="w-full"
+          className="w-full border rounded-lg shadow-md text-white transition duration-200 ease-in-out "
+          style={{
+            backgroundColor: filters.type2
+              ? typeColorsHex[filters.type2]
+              : "rgba(200, 200, 200, 0.8)",
+            border: `2px solid rgba(${
+              filters.type2 && filters.type2 !== "Any"
+                ? typeColorsRGB[filters.type2]
+                : "200, 200, 200"
+            }, 1)`,
+          }}
         />
+      </div>
+
+      <div className="flex justify-around mt-6">
+        <button
+          className="px-4 py-2 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600 transition duration-200"
+          onClick={handleReonFilterChange}
+        >
+          Reset Filters
+        </button>
+        <button
+          className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition duration-200"
+          onClick={handleSearch}
+        >
+          Search
+        </button>
       </div>
     </div>
   );
