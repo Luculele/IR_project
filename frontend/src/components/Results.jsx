@@ -34,12 +34,9 @@ const Results = ({ results, loading, sidebarVisible }) => {
   }
 
   return (
-    <div
-      className="results-container p-8 rounded max-h-[670px] w-full overflow-y-auto my-10"
-      style={{ scrollbarWidth: "thin", scrollbarColor: "#cbd5e1 #f1f5f9" }}
-    >
+    <div className="results-container p-8 rounded max-h-[670px] w-full overflow-y-auto my-10 custom-scrollbar">
       {/* Layout with Flexbox */}
-      <div className="flex flex-wrap justify-evenly gap-6 transition-all duration-300 ">
+      <div className="flex flex-wrap justify-evenly gap-6 transition-all duration-300 custom-scrollbar">
         {results.map((pokemon) => (
           <Link
             className="w-[300px] h-[300px] bg-white rounded-lg shadow-xl p-4 hover:shadow-xl transition transform hover:scale-105 flex flex-col items-center justify-center"

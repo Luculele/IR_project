@@ -103,9 +103,9 @@ const App = () => {
 
         {/* Results Section */}
         <div
-          className={` rounded-3xl mx-48 max-h-[770px] transition-all duration-300 my-5${
+          className={` rounded-3xl mx-48 max-h-[770px] transition-all duration-300 my-5 ${
             isResultsVisible ? "flex" : "hidden"
-          } flex-grow bg-white ${sidebarVisible ? "mr-[340px]" : ""}`}
+          } flex-grow ${sidebarVisible ? "mr-[375px]" : ""}`}
           style={{
             backgroundColor: "rgba(236, 236, 236, 0.95)",
           }}

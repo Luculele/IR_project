@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Dropdown } from "primereact/dropdown";
 import { Slider } from "primereact/slider";
 import { searchPokemon } from "../utils/solrApi";
+import { Link } from "react-router-dom";
 import "../index.css";
 import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.min.css";
@@ -263,12 +264,13 @@ const Filters = ({
         >
           Reset Filters
         </button>
-        <button
-          className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition duration-200"
+        <Link
+          to="/"
           onClick={handleSearch}
+          className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition duration-200 text-center"
         >
           Search
-        </button>
+        </Link>
       </div>
     </div>
   );

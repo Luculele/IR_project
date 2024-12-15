@@ -64,3 +64,25 @@
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 12px; /* Larghezza della barra di scorrimento */
+}
+
+/* Colore e stile dello sfondo della barra */
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent; /* Colore dello sfondo */
+  border-radius: 10px;
+}
+
+/* Colore e stile della barra di scorrimento */
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #888; /* Colore della barra */
+  border-radius: 10px;
+  border: 3px solid #f1f1f1; /* Padding */
+}
+
+/* Cambia colore al hover */
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
