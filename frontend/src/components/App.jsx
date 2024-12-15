@@ -7,6 +7,7 @@ import SearchBar from "./Searchbar";
 import Logo from "./Logo";
 import Results from "./Results";
 import PokemonDetails from "./PokemonDetails";
+import Footer from "./Footer";
 import "../index.css";
 import "primereact/resources/themes/saga-blue/theme.css"; // PrimeReact Theme
 import "primereact/resources/primereact.min.css"; // Core CSS
@@ -127,6 +128,8 @@ const App = () => {
             />
           </Routes>
         </div>
+        {/* Add the Footer here */}
+        <Footer />
       </div>
     </Router>
   );
