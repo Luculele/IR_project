@@ -93,7 +93,7 @@ const App = () => {
             <Routes>
               <Route
                 path="/"
-                element={<Results results={results} loading={loading} />}
+                element={<Results results={results} loading={loading} sidebarVisible={sidebarVisible}/>}
               />
               <Route
                 path="/pokemon/:id"

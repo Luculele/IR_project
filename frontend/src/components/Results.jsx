@@ -40,21 +40,22 @@ const Results = ({ results, loading, sidebarVisible }) => {
       >
         {/* Conditionally adjust layout */}
         <div
-            className={`grid gap-6 ${
+            className={`grid gap-10 ${
                 sidebarVisible
-                    ? "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3"
-                    : "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+                    ? "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+                    : "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5"
             }`}
             style={{
-              marginLeft: sidebarVisible ? "50px" : "50px", // Shift everything left when sidebar is visible
-              paddingLeft: sidebarVisible ? "50px" : "50px", // Adjust padding if needed
+              marginLeft: sidebarVisible ? "0px" : "0px", // Shift everything left when sidebar is visible
+              paddingLeft: sidebarVisible ? "0px" : "0px", // Adjust padding if needed
+              paddingRight: sidebarVisible ? "120px" : "20px",
             }}
         >
           {results.map((pokemon) => (
               <Link to={`/pokemon/${pokemon.id}`} key={pokemon.id}>
                 <div
-                    className={`bg-white rounded-lg shadow-lg p-4 flex flex-col items-center hover:shadow-xl transition-shadow ${
-                        sidebarVisible ? "w-48" : "w-64" // Adjust width of cards when sidebar is visible
+                    className={`bg-white rounded-lg shadow-lg p-2 flex flex-col items-center hover:shadow-xl transition-shadow ${
+                        sidebarVisible ? "w-44" : "w-54" // Adjust width of cards when sidebar is visible
                     }`}
                 >
                   <img
