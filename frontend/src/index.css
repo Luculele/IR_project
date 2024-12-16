@@ -86,3 +86,11 @@
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+/* html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-y: hidden; 
+} */

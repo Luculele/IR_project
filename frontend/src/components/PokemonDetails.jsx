@@ -97,7 +97,7 @@ const PokemonDetails = () => {
   }
 
   return (
-    <div className="rounded-3xl mx-7 my-auto max-h-[670px] w-[1000px]  flex-grow bg-[rgba(236,236,236,0.95)] overflow-y-auto p-6  shadow-lg custom-scrollbar">
+    <div className="rounded-3xl mx-7 my-[3vh] max-h-[670px] w-[90vw]  flex-grow bg-[rgba(236,236,236,0.95)] overflow-y-auto p-6  shadow-lg custom-scrollbar">
       {/* Top Section */}
       <div className="flex justify-between items-start mb-8">
         {/* Pokémon Image */}

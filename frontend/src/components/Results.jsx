@@ -34,7 +34,7 @@ const Results = ({ results, loading, sidebarVisible }) => {
   }
 
   return (
-    <div className="results-container p-8 rounded max-h-[670px] w-full overflow-y-auto my-10 custom-scrollbar">
+    <div className="results-container p-8 rounded max-h-[60vh] w-full overflow-y-auto my-10 custom-scrollbar">
       {/* Layout with Flexbox */}
       <div className="flex flex-wrap justify-evenly gap-6 transition-all duration-300 custom-scrollbar">
         {results.map((pokemon) => (

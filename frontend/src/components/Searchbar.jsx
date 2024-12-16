@@ -31,7 +31,7 @@ const SearchBar = ({ query, setQuery, setResults, setLoading, filters }) => {
   return (
     <div className="flex-col justify-center items-center">
       <div className="flex flex-col items-center">
-        <div className="flex items-center rounded-full overflow-hidden shadow-lg w-full max-w-[600px]">
+        <div className="flex items-center rounded-full overflow-hidden shadow-lg w-full max-w-[70vh] max-h-[6vh]">
           <input
             type="text"
             value={query}

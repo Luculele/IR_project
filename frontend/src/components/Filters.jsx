@@ -137,7 +137,7 @@ const Filters = ({
   };
 
   return (
-    <div className="fixed top-53 right-9 h-100 w-64 p-4 overflow-y-auto bg-white  shadow-2xl rounded-xl">
+    <div className="fixed top-53 right-9 max-h-[85vh] w-64 p-4 overflow-y-auto bg-white  shadow-2xl rounded-xl custom-scrollbar">
       <h2 className="text-xl font-bold mb-4 place-self-center">Filters</h2>
 
       {Object.entries(filters)

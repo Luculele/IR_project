@@ -41,7 +41,7 @@ const App = () => {
     <Router>
       <div className="flex flex-col min-h-screen bg-bulbasaur bg-cover bg-center bg-no-repeat">
         {/* Sidebar for Filters */}
-        <div className=" sidebar transition-all duration-300">
+        <div className="sidebar transition-all duration-300 ">
           <Sidebar
             visible={sidebarVisible}
             onHide={() => setSidebarVisible(false)}
@@ -50,54 +50,51 @@ const App = () => {
             dismissable={false}
             style={{
               backgroundColor: "rgba(236, 236, 236, 0.85)",
-              borderRadius: "16px",
+              borderRadius: "1rem",
               boxShadow: "0 4px 10px rgba(0, 0, 0, 0.5)",
-              height: "91%",
+              height: "90vh",
             }}
           >
-            {/*<h2 className="text-xl font-bold mb-4">Filters</h2>*/}
             <Filters
               filters={filters}
               query={query}
               onFilterChange={handleFiltersChange}
               setResults={(newResults) => {
                 setResults(newResults);
-                if (newResults.length > 0) {
-                  setIsResultsVisible(true);
-                }
+                if (newResults.length > 0) setIsResultsVisible(true);
               }}
               setLoading={setLoading}
             />
           </Sidebar>
         </div>
 
+        {/* Sidebar Toggle */}
         <div
-          className={`fixed top-1/2 transform -translate-y-1/2 rotate-90 z-50 flex items-center justify-center bg-blue-500 text-white w-16 h-12 shadow-lg hover:bg-blue-600 transition-all duration-300 clip-path-trapezoid ${
-            sidebarVisible ? "right-[311px]" : "right-[-8px]"
+          className={`fixed top-1/2 transform -translate-y-1/2 rotate-90 z-50 flex items-center justify-center bg-blue-500 text-white w-14 h-10 shadow-lg hover:bg-blue-600 transition-all duration-300 clip-path-trapezoid ${
+            sidebarVisible ? "right-[19.5em]" : "right-[-0.5rem]"
           }`}
           onClick={() => setSidebarVisible(!sidebarVisible)}
         >
           <i
             className={`pi ${
               sidebarVisible ? "pi-arrow-up" : "pi-arrow-down"
-            } text-xl`}
+            } text-lg`}
           ></i>
         </div>
 
         {/* Title Section */}
-        <div className="w-full p-4">
+        <div className="w-full p-4 max-h-[15vh]">
           <Logo />
         </div>
+
         {/* Search Bar */}
-        <div className="w-full p-4">
+        <div className="w-full px-4 py-2 max-h-[6vh]">
           <SearchBar
             query={query}
             setQuery={setQuery}
             setResults={(newResults) => {
               setResults(newResults);
-              if (newResults.length > 0) {
-                setIsResultsVisible(true);
-              }
+              if (newResults.length > 0) setIsResultsVisible(true);
             }}
             setLoading={setLoading}
             filters={filters}
@@ -106,11 +103,15 @@ const App = () => {
 
         {/* Results Section */}
         <div
-          className={` rounded-3xl mx-48 max-h-[770px] transition-all duration-300 my-5 ${
+          className={`rounded-3xl mx-4 md:mx-8 lg:mx-20 my-5 max-h-[70vh]  transition-all duration-300 ${
             isResultsVisible ? "flex" : "hidden"
-          } flex-grow ${sidebarVisible ? "mr-[375px]" : ""}`}
+          }`}
           style={{
             backgroundColor: "rgba(236, 236, 236, 0.95)",
+            width: sidebarVisible ? "calc(90vw - 280px)" : "90vw",
+            transition:
+              "width 300ms ease-in-out, margin-right 300ms ease-in-out",
+            marginRight: sidebarVisible ? "256px" : "0px",
           }}
         >
           <Routes>
@@ -134,7 +135,8 @@ const App = () => {
             />
           </Routes>
         </div>
-        {/* Add the Footer here */}
+
+        {/* Footer */}
         <Footer />
       </div>
     </Router>
