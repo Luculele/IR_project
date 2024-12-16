@@ -137,7 +137,7 @@ const App = () => {
         </div>
 
         {/* Footer */}
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </Router>
   );

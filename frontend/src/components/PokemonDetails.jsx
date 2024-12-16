@@ -135,7 +135,7 @@ const PokemonDetails = () => {
         {/* Back Button */}
         <button
           onClick={() => navigate("/")}
-          className="px-4 py-2 bg-blue-500 text-white rounded-xl hover:bg-blue-600 w-[150px] h-[60px]"
+          className="px-4 py-2 bg-blue-500 text-white rounded-xl hover:bg-blue-600 w-[150px] h-[70px]"
         >
           Back To Results
         </button>

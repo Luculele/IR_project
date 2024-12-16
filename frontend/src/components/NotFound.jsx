@@ -3,7 +3,7 @@ import sadImage from "../img/sadTogepi.png";
 
 const NotFound = () => {
   return (
-    <div className="h-[60vh] w-[60vw] mx-auto my-auto">
+    <div className="h-[60vh] w-[60vw] mx-auto mt-28">
       <div className="flex flex-col items-center justify-center mx-auto my-auto bg-[rgba(236,236,236,0.95)] rounded-3xl shadow-2xl py-24">
         <img
           src={sadImage}
