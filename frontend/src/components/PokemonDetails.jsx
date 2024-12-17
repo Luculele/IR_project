@@ -43,7 +43,6 @@ const PokemonDetails = () => {
 
         let evolutionIds = [];
         if (
-          fetchedPokemon.evolution_line &&
           fetchedPokemon.evolution_line.length > 0
         ) {
           const evolutionPromises = fetchedPokemon.evolution_line.map((name) =>
@@ -59,11 +58,11 @@ const PokemonDetails = () => {
           evolutionIds = filteredEvolutionData.map((evo) => evo.id);
         }
 
-        const recommendedPokemons = await fetchMoreLikeThis(
+        const recommendedPokemon = await fetchMoreLikeThis(
           id,
           evolutionIds.length - 1
         );
-        const filteredRecommended = recommendedPokemons.filter(
+        const filteredRecommended = recommendedPokemon.filter(
           (rec) => !evolutionIds.includes(rec.id)
         );
         setRecommended(filteredRecommended);
@@ -75,7 +74,7 @@ const PokemonDetails = () => {
       }
     };
 
-    loadPokemon();
+    loadPokemon().then();
   }, [id]);
 
   if (loading) {

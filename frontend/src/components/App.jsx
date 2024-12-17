@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Sidebar } from "primereact/sidebar";
-import { Button } from "primereact/button";
 import Filters from "./Filters";
 import SearchBar from "./Searchbar";
 import Logo from "./Logo";
 import Results from "./Results";
 import PokemonDetails from "./PokemonDetails";
-import Footer from "./Footer";
 import "../index.css";
 import "primereact/resources/themes/saga-blue/theme.css"; // PrimeReact Theme
 import "primereact/resources/primereact.min.css"; // Core CSS

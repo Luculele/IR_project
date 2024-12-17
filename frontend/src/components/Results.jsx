@@ -22,7 +22,7 @@ const typeColors = {
   Normal: "bg-gray-200 text-black",
 };
 
-const Results = ({ results, loading, sidebarVisible }) => {
+const Results = ({ results, loading}) => {
   console.log("Results received by Results component:", results);
 
   if (loading) {
