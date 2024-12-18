@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import NotFound from "./NotFound";
 
 const typeColors = {
   Grass: "bg-green-500 text-white",
@@ -22,7 +23,7 @@ const typeColors = {
   Normal: "bg-gray-200 text-black",
 };
 
-const Results = ({ results, loading}) => {
+const Results = ({ results, loading }) => {
   console.log("Results received by Results component:", results);
 
   if (loading) {
@@ -30,7 +31,7 @@ const Results = ({ results, loading}) => {
   }
 
   if (results.length === 0) {
-    return <p className="text-center mt-4 text-gray-600">No results found</p>;
+    return <NotFound />;
   }
 
   return (

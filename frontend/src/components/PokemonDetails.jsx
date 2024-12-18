@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import NotFound from "./NotFound";
+
 import {
   fetchPokemonById,
   fetchMoreLikeThis,
@@ -27,7 +29,7 @@ const typeColors = {
   Normal: "bg-gray-200 text-black",
 };
 
-const PokemonDetails = () => {
+const PokemonDetails = ({ results }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [pokemon, setPokemon] = useState(null);
@@ -42,9 +44,7 @@ const PokemonDetails = () => {
         setPokemon(fetchedPokemon);
 
         let evolutionIds = [];
-        if (
-          fetchedPokemon.evolution_line.length > 0
-        ) {
+        if (fetchedPokemon.evolution_line.length > 0) {
           const evolutionPromises = fetchedPokemon.evolution_line.map((name) =>
             fetchPokemonByName(name)
           );
@@ -93,6 +93,10 @@ const PokemonDetails = () => {
         </button>
       </div>
     );
+  }
+
+  if (results.length === 0) {
+    return <NotFound />;
   }
 
   return (

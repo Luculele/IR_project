@@ -59,7 +59,7 @@ const App = () => {
               onFilterChange={handleFiltersChange}
               setResults={(newResults) => {
                 setResults(newResults);
-                if (newResults.length > 0) setIsResultsVisible(true);
+                if (newResults.length >= 0) setIsResultsVisible(true);
               }}
               setLoading={setLoading}
             />
@@ -92,7 +92,7 @@ const App = () => {
             setQuery={setQuery}
             setResults={(newResults) => {
               setResults(newResults);
-              if (newResults.length > 0) setIsResultsVisible(true);
+              if (newResults.length >= 0) setIsResultsVisible(true);
             }}
             setLoading={setLoading}
             filters={filters}
@@ -113,23 +113,23 @@ const App = () => {
           }}
         >
           <Routes>
-            {results.length === 0 ? (
-              <Route path="/" element={<NotFound />} />
-            ) : (
-              <Route
-                path="/"
-                element={
+            <Route
+              path="/"
+              element={
+                results.length === 0 ? (
+                  <NotFound />
+                ) : (
                   <Results
                     results={results}
                     loading={loading}
                     sidebarVisible={sidebarVisible}
                   />
-                }
-              />
-            )}
+                )
+              }
+            />
             <Route
               path="/pokemon/:id"
-              element={<PokemonDetails data={results} />}
+              element={<PokemonDetails results={results} />}
             />
           </Routes>
         </div>
