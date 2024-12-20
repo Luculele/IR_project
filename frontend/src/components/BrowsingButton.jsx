@@ -27,6 +27,7 @@ const BrowsingButton = ({
   const handleSearch = async () => {
     // if (!query.trim()) return;
     // setLoading(true);
+    setLoading(true);
     try {
       const data = await searchPokemon("", defaultFilters);
       console.log("Data from API:", data);

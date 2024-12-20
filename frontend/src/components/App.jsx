@@ -12,6 +12,7 @@ import "primereact/resources/themes/saga-blue/theme.css"; // PrimeReact Theme
 import "primereact/resources/primereact.min.css"; // Core CSS
 import "primeicons/primeicons.css";
 import NotFound from "./NotFound";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const App = () => {
   const [results, setResults] = useState([]);
@@ -113,7 +114,7 @@ const App = () => {
 
         {/* Results Section */}
         <div
-          className={`rounded-3xl mx-4 md:mx-8 lg:mx-20 my-5 max-h-[70vh]  transition-all duration-300 ${
+          className={`rounded-3xl mx-4 md:mx-8 lg:mx-20 my-5 max-h-[70vh] transition-all duration-300 ${
             isResultsVisible ? "flex" : "hidden"
           }`}
           style={{
@@ -124,26 +125,32 @@ const App = () => {
             marginRight: sidebarVisible ? "256px" : "0px",
           }}
         >
-          <Routes>
-            <Route
-              path="/"
-              element={
-                results.length === 0 ? (
-                  <NotFound />
-                ) : (
-                  <Results
-                    results={results}
-                    loading={loading}
-                    sidebarVisible={sidebarVisible}
-                  />
-                )
-              }
-            />
-            <Route
-              path="/pokemon/:id"
-              element={<PokemonDetails results={results} />}
-            />
-          </Routes>
+          {loading ? (
+            <div className="flex items-center justify-center h-[70vh]  w-full">
+              <ClipLoader color="#3498db" loading={loading} size={300} />
+            </div>
+          ) : (
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  results.length === 0 ? (
+                    <NotFound />
+                  ) : (
+                    <Results
+                      results={results}
+                      loading={loading}
+                      sidebarVisible={sidebarVisible}
+                    />
+                  )
+                }
+              />
+              <Route
+                path="/pokemon/:id"
+                element={<PokemonDetails results={results} />}
+              />
+            </Routes>
+          )}
         </div>
 
         {/* Footer */}

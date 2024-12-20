@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { searchPokemon } from "../utils/solrApi";
 import { Link, useNavigate } from "react-router-dom";
 import "../index.css";
@@ -8,10 +8,12 @@ import NotFound from "./NotFound";
 const SearchBar = ({ query, setQuery, setResults, setLoading, filters }) => {
   const navigate = useNavigate();
   const [isEmpty, setIsEmpty] = useState(false);
+  const inputRef = useRef(null);
 
   const handleSearch = async () => {
     // if (!query.trim()) return;
     // setLoading(true);
+    setLoading(true);
     try {
       const data = await searchPokemon(query, filters);
       console.log("Data from API:", data);
@@ -38,12 +40,37 @@ const SearchBar = ({ query, setQuery, setResults, setLoading, filters }) => {
     }
   };
 
+  const clearInput = () => {
+    setQuery("");
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
+
   return (
     <div className="flex-col justify-center items-center w-[40vw]">
       <div className="flex flex-col items-center">
-        <div className="flex items-center rounded-full overflow-hidden shadow-lg w-full max-w-[70vh] max-h-[6vh]">
+        <div className="flex items-center rounded-full overflow-hidden shadow-lg w-full max-w-[70vh] max-h-[6vh] z-0">
+          {query && (
+            <div
+              className={`transform bg-white text-gray-700 w-8 h-[60px] flex items-center justify-center transition-all duration-500 z-10 ${
+                query
+                  ? "translate-x-0 opacity-100"
+                  : "translate-x-full opacity-0"
+              }`}
+            >
+              <button
+                onClick={clearInput}
+                className="absolute left-3 bg-gray-200 text-gray-700 text-lg rounded-full w-8 h-8 flex items-center justify-center hover:bg-gray-300 hover:text-gray-900 transition-all duration-400 z-10"
+                aria-label="Clear search input"
+              >
+                ✖
+              </button>
+            </div>
+          )}
           <input
             type="text"
+            ref={inputRef}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyPress}
@@ -52,6 +79,7 @@ const SearchBar = ({ query, setQuery, setResults, setLoading, filters }) => {
             style={{ fontSize: "1.5rem", lineHeight: "1.5rem" }}
             aria-label="Search query input"
           />
+
           <Link
             to="/"
             onClick={handleSearch}

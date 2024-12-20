@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import NotFound from "./NotFound";
+import ClipLoader from "react-spinners/ClipLoader";
 
 import {
   fetchPokemonById,
@@ -77,20 +78,10 @@ const PokemonDetails = ({ results }) => {
     loadPokemon().then();
   }, [id]);
 
-  if (loading) {
-    return <p className="text-center mt-4 text-gray-600">Loading...</p>;
-  }
-
   if (!pokemon) {
     return (
-      <div className="flex flex-col items-center justify-center text-center p-6">
-        <h2 className="text-2xl font-bold text-gray-800">Pokémon not found</h2>
-        <button
-          onClick={() => navigate(-1)}
-          className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-        >
-          Go Back
-        </button>
+      <div className="flex items-center justify-center h-[70vh]  w-full">
+        <ClipLoader color="#3498db" loading={loading} size={300} />
       </div>
     );
   }
