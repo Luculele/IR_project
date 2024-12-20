@@ -39,7 +39,7 @@ const SearchBar = ({ query, setQuery, setResults, setLoading, filters }) => {
   };
 
   return (
-    <div className="flex-col justify-center items-center">
+    <div className="flex-col justify-center items-center w-[40vw]">
       <div className="flex flex-col items-center">
         <div className="flex items-center rounded-full overflow-hidden shadow-lg w-full max-w-[70vh] max-h-[6vh]">
           <input
@@ -57,7 +57,11 @@ const SearchBar = ({ query, setQuery, setResults, setLoading, filters }) => {
             onClick={handleSearch}
             className="w-[70px] h-[60px] bg-blue-500 text-white flex items-center justify-center border-none rounded-tr-full rounded-br-full transition-colors duration-300 hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <img src={glass} alt="Search icon" className="w-5" />
+            <img
+              src={glass}
+              alt="Search icon"
+              className="w-6  filter invert brightness-0 saturate-100 contrast-100"
+            />
           </Link>
         </div>
       </div>

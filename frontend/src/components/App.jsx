@@ -5,6 +5,7 @@ import Filters from "./Filters";
 import SearchBar from "./Searchbar";
 import Logo from "./Logo";
 import Results from "./Results";
+import BrowsingButton from "./BrowsingButton";
 import PokemonDetails from "./PokemonDetails";
 import "../index.css";
 import "primereact/resources/themes/saga-blue/theme.css"; // PrimeReact Theme
@@ -86,7 +87,18 @@ const App = () => {
         </div>
 
         {/* Search Bar */}
-        <div className="w-full px-4 py-2 max-h-[6vh]">
+        <div className=" w-[92vw] px-4 py-2 max-h-[6vh]  flex items-center space-x-10 justify-center">
+          {/* Browsing button */}
+          <BrowsingButton
+            query={query}
+            setQuery={setQuery}
+            setResults={(newResults) => {
+              setResults(newResults);
+              if (newResults.length >= 0) setIsResultsVisible(true);
+            }}
+            setLoading={setLoading}
+            filters={filters}
+          />
           <SearchBar
             query={query}
             setQuery={setQuery}
