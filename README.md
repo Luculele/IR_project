@@ -28,8 +28,6 @@ PYTHON
 
     Solr
 
-    TODO STIPE PD
-
         in order to setup the solrconfig.xml for mlt query:
 
             curl -X POST -H "Content-Type: application/json" \
